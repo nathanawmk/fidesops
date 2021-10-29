@@ -1,0 +1,1334 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="https://ethyca.github.io/fidesops/guides/configuration_reference/">
+      
+      <link rel="icon" href="../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.2.5">
+    
+    
+      
+        <title>Configuration Reference - Fidesops</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.be71726b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700%7C&display=fallback">
+        <style>:root{--md-text-font-family:"Source Sans Pro";--md-code-font-family:""}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+    
+      <link rel="stylesheet" href="../../css/fides.css">
+    
+      <link rel="stylesheet" href="../../css/api.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fidesops-application-configuration-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Fidesops" class="md-header__button md-logo" aria-label="Fidesops" data-md-component="logo">
+      
+  <img src="../../img/fides-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fidesops
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Configuration Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m10-3a5 5 0 0 1 5 5 5 5 0 0 1-5 5H7a5 5 0 0 1-5-5 5 5 0 0 1 5-5h10M7 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3h10a3 3 0 0 0 3-3 3 3 0 0 0-3-3H7z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Fidesops" class="md-nav__button md-logo" aria-label="Fidesops" data-md-component="logo">
+      
+  <img src="../../img/fides-logo.svg" alt="logo">
+
+    </a>
+    Fidesops
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        What is Fidesops?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../use_cases/" class="md-nav__link">
+        Use Cases
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/" class="md-nav__link">
+        Zero to Privacy Request
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/installation/" class="md-nav__link">
+        Installing Fidesops
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/outline/" class="md-nav__link">
+        Outlining our Python Script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/oauth_client/" class="md-nav__link">
+        Creating an Oauth Client
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/postgres_connection/" class="md-nav__link">
+        Connecting to Postgres
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/annotate_datasets/" class="md-nav__link">
+        Annotating our Database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/storage_config/" class="md-nav__link">
+        Configuring our Storage Destination
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/define_policy/" class="md-nav__link">
+        Defining a Policy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/execute_privacy_request/" class="md-nav__link">
+        Executing a Privacy Request
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        How-To Guides
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="How-To Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          How-To Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oauth/" class="md-nav__link">
+        Authenticate with OAuth
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database_connectors/" class="md-nav__link">
+        Connect SQL and NoSQL Databases
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets/" class="md-nav__link">
+        Configure Datasets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../query_execution/" class="md-nav__link">
+        Preview Query Execution
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policies/" class="md-nav__link">
+        Create Request Policies
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../masking_strategies/" class="md-nav__link">
+        Configure Data Masking Strategies
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage/" class="md-nav__link">
+        Configure Storage Destinations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy_requests/" class="md-nav__link">
+        Execute Privacy Requests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reporting/" class="md-nav__link">
+        Report on Privacy Requests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../onetrust/" class="md-nav__link">
+        Configure OneTrust Integration
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Configuration Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Configuration Reference
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-configure-the-fidesops-application" class="md-nav__link">
+    How to configure the Fidesops application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-variable-reference" class="md-nav__link">
+    Configuration variable reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-example-fidesopstoml-configuration-file" class="md-nav__link">
+    An example fidesops.toml configuration file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-reporting-a-running-applications-configuration" class="md-nav__link">
+    - Reporting a running application's configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="- Reporting a running application's configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#postgres-database" class="md-nav__link">
+    Postgres database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redis-cache" class="md-nav__link">
+    Redis cache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-settings" class="md-nav__link">
+    Security settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution-settings" class="md-nav__link">
+    Execution settings
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/" class="md-nav__link">
+        Deployment Guide
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      <label class="md-nav__link" for="__nav_8">
+        Development
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/code_style/" class="md-nav__link">
+        Code Style
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/documentation/" class="md-nav__link">
+        Documentation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/pull_requests/" class="md-nav__link">
+        Pull Requests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/releases/" class="md-nav__link">
+        Releases
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      <label class="md-nav__link" for="__nav_9">
+        Community
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Community" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../community/github/" class="md-nav__link">
+        GitHub
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../community/code_of_conduct/" class="md-nav__link">
+        Code of Conduct
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ethyca/" class="md-nav__link">
+        About Ethyca
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-configure-the-fidesops-application" class="md-nav__link">
+    How to configure the Fidesops application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-variable-reference" class="md-nav__link">
+    Configuration variable reference
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-example-fidesopstoml-configuration-file" class="md-nav__link">
+    An example fidesops.toml configuration file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-reporting-a-running-applications-configuration" class="md-nav__link">
+    - Reporting a running application's configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="- Reporting a running application's configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#postgres-database" class="md-nav__link">
+    Postgres database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redis-cache" class="md-nav__link">
+    Redis cache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-settings" class="md-nav__link">
+    Security settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execution-settings" class="md-nav__link">
+    Execution settings
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="fidesops-application-configuration-reference">Fidesops: Application Configuration Reference</h1>
+<p>In this section we'll cover:</p>
+<ul>
+<li>How to configure the Fidesops application</li>
+<li>Configuration variable reference</li>
+<li>An example <code>fidesops.toml</code> configuration file</li>
+<li>Reporting a running application's configuration</li>
+</ul>
+<p>Take me directly to <a href="/docs#/Config">api docs</a>.</p>
+<h2 id="how-to-configure-the-fidesops-application">How to configure the Fidesops application</h2>
+<p>The Fidesops application configuration variables are provided in the <code>fidesops.toml</code> file in <code>.toml</code> format. Fidesops will take the first config file it finds from the following locations:</p>
+<ul>
+<li>The location according to the <code>FIDESOPS_CONFIG_PATH</code> environment variable</li>
+<li>The current working directory (<code>./fidesops.toml</code>)</li>
+<li>The parent of the current working directory (<code>../fidesops.toml</code>)</li>
+<li>The user's home directory (<code>~/fidesops.toml</code>)</li>
+</ul>
+<p>Fidesops is also able to be run exclusively from environment variables. For more information and examples, see <a href="../../deployment/#step-3-setup-fidesops-web-server">Deployment</a>.</p>
+<h2 id="configuration-variable-reference">Configuration variable reference</h2>
+<p>The <code>fidesops.toml</code> file should specify the following variables:</p>
+<table>
+<thead>
+<tr>
+<th>TOML Variable</th>
+<th>ENV Variable</th>
+<th>Type</th>
+<th>Example</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SERVER</code></td>
+<td><code>FIDESOPS__DATABASE__SERVER</code></td>
+<td>string</td>
+<td>postgres.internal</td>
+<td>N/A</td>
+<td>The networking address for the Fideops Postgres database server</td>
+</tr>
+<tr>
+<td><code>USER</code></td>
+<td><code>FIDESOPS__DATABASE_USER</code></td>
+<td>string</td>
+<td>postgres</td>
+<td>N/A</td>
+<td>The database user with which to login to the Fidesops application database</td>
+</tr>
+<tr>
+<td><code>PASSWORD</code></td>
+<td><code>FIDESOPS__DATABASE_PASSWORD</code></td>
+<td>string</td>
+<td>apassword</td>
+<td>N/A</td>
+<td>The password with which to login to the Fidesops application database</td>
+</tr>
+<tr>
+<td><code>PORT</code></td>
+<td><code>FIDESOPS__DATABASE__PORT</code></td>
+<td>int</td>
+<td>5432</td>
+<td>5432</td>
+<td>The port at which the Fidesops application database will be accessible</td>
+</tr>
+<tr>
+<td><code>DB</code></td>
+<td><code>FIDESOPS__DATABASE_DB</code></td>
+<td>string</td>
+<td>db</td>
+<td>N/A</td>
+<td>The name of the database to use in the Fidesops application database</td>
+</tr>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td><code>HOST</code></td>
+<td><code>FIDESOPS__REDIS__HOST</code></td>
+<td>string</td>
+<td>redis.internal</td>
+<td>N/A</td>
+<td>The networking address for the Fidesops application Redis cache</td>
+</tr>
+<tr>
+<td><code>PORT</code></td>
+<td><code>FIDESOPS__REDIS__PORT</code></td>
+<td>int</td>
+<td>6379</td>
+<td>6379</td>
+<td>The port at which the Fidesops application cache will be accessible</td>
+</tr>
+<tr>
+<td><code>PASSWORD</code></td>
+<td><code>FIDESOPS__REDIS__PASSWORD</code></td>
+<td>string</td>
+<td>anotherpassword</td>
+<td>N/A</td>
+<td>The password with which to login to the Fidesops application cache</td>
+</tr>
+<tr>
+<td><code>DB_INDEX</code></td>
+<td><code>FIDESOPS__REDIS__DB_INDEX</code></td>
+<td>int</td>
+<td>0</td>
+<td>0</td>
+<td>The Fidesops application will use this index in the Redis cache to cache data</td>
+</tr>
+<tr>
+<td><code>DEFAULT_TTL_SECONDS</code></td>
+<td><code>FIDESOPS__REDIS__DEFAULT_TTL_SECONDS</code></td>
+<td>int</td>
+<td>3600</td>
+<td>3600</td>
+<td>The number of seconds for which data will live in Redis before automatically expiring</td>
+</tr>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td><code>APP_ENCRYPTION_KEY</code></td>
+<td><code>FIDESOPS__SECURITY__APP_ENCRYPTION_KEY</code></td>
+<td>string</td>
+<td>OLMkv91j8DHiDAULnK5Lxx3kSCov30b3</td>
+<td>N/A</td>
+<td>The key used to sign Fidesops API access tokens</td>
+</tr>
+<tr>
+<td><code>CORS_ORIGINS</code></td>
+<td><code>FIDESOPS__SECURITY__CORS_ORIGINS</code></td>
+<td>List[AnyHttpUrl]</td>
+<td>["https://a-client.com/", "https://another-client.com"/]</td>
+<td>N/A</td>
+<td>A list of pre-approved addresses of clients allowed to communicate with the Fidesops application server</td>
+</tr>
+<tr>
+<td><code>OAUTH_ROOT_CLIENT_ID</code></td>
+<td><code>FIDESOPS__SECURITY__OAUTH_ROOT_CLIENT_ID</code></td>
+<td>string</td>
+<td>fidesopsadmin</td>
+<td>N/A</td>
+<td>The value used to identify the Fidesops application root API client</td>
+</tr>
+<tr>
+<td><code>OAUTH_ROOT_CLIENT_SECRET</code></td>
+<td><code>FIDESOPS__SECURITY__OAUTH_ROOT_CLIENT_SECRET</code></td>
+<td>string</td>
+<td>fidesopsadminsecret</td>
+<td>N/A</td>
+<td>The secret value used to authenticate the Fidesops application root API client</td>
+</tr>
+<tr>
+<td><code>OAUTH_ACCESS_TOKEN_EXPIRE_MINUTES</code></td>
+<td><code>FIDESOPS__SECURITY__OAUTH_ACCESS_TOKEN_EXPIRE_MINUTES</code></td>
+<td>int</td>
+<td>1</td>
+<td>11520</td>
+<td>The time period Fidesops API tokens will be valid</td>
+</tr>
+<tr>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+<td>---</td>
+</tr>
+<tr>
+<td><code>TASK_RETRY_COUNT</code></td>
+<td><code>FIDESOPS__EXECUTION__TASK_RETRY_COUNT</code></td>
+<td>int</td>
+<td>5</td>
+<td>2</td>
+<td>The number of times a failed request will be retried</td>
+</tr>
+<tr>
+<td><code>TASK_RETRY_DELAY</code></td>
+<td><code>FIDESOPS__EXECUTION__TASK_RETRY_DELAY</code></td>
+<td>int</td>
+<td>20</td>
+<td>5</td>
+<td>The delays between retries in seconds</td>
+</tr>
+<tr>
+<td><code>TASK_RETRY_BACKOFF</code></td>
+<td><code>FIDESOPS__EXECUTION__TASK_RETRY_BACKOFF</code></td>
+<td>int</td>
+<td>2</td>
+<td>2</td>
+<td>The backoff factor for retries, to space out repeated retries.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="an-example-fidesopstoml-configuration-file">An example <code>fidesops.toml</code> configuration file</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>[database]
+SERVER=&quot;db&quot;
+USER=&quot;postgres&quot;
+PASSWORD=&quot;a-password&quot;
+DB=&quot;app&quot;
+TEST_DB=&quot;test&quot;
+
+[redis]
+HOST=&quot;redis&quot;
+PASSWORD=&quot;testpassword&quot;
+PORT=6379
+CHARSET=&quot;utf8&quot;
+DEFAULT_TTL_SECONDS=3600
+DB_INDEX=0
+
+[security]
+APP_ENCRYPTION_KEY=&quot;OLMkv91j8DHiDAULnK5Lxx3kSCov30b3&quot;
+CORS_ORIGINS=[&quot;http://localhost&quot;, &quot;http://localhost:8080&quot;]
+ENCODING=&quot;UTF-8&quot;
+OAUTH_ROOT_CLIENT_ID=&quot;fidesopsadmin&quot;
+OAUTH_ROOT_CLIENT_SECRET=&quot;fidesopsadminsecret&quot;
+
+[execution]
+TASK_RETRY_COUNT=3
+TASK_RETRY_DELAY=20
+TASK_RETRY_BACKOFF=2
+</code></pre></div>
+</td></tr></table>
+<p>Please note: The configuration is case-sensitive, so the variables must be specified in UPPERCASE.</p>
+<h2 id="-reporting-a-running-applications-configuration">- Reporting a running application's configuration</h2>
+<p>You can view the currently running configuration of a Fidesops application with the following request:</p>
+<p><code>GET /api/v1/config</code></p>
+<p>Please note: Fidesops will filter out any sensitive configuration variables. The full list of variables deemed safe to return is:</p>
+<h4 id="postgres-database">Postgres database</h4>
+<ul>
+<li><code>SERVER</code></li>
+<li><code>USER</code></li>
+<li><code>PORT</code></li>
+<li><code>DB</code></li>
+<li><code>TEST_DB</code></li>
+</ul>
+<h4 id="redis-cache">Redis cache</h4>
+<ul>
+<li><code>HOST</code></li>
+<li><code>PORT</code></li>
+<li><code>CHARSET</code></li>
+<li><code>DECODE_RESPONSES</code></li>
+<li><code>DEFAULT_TTL_SECONDS</code></li>
+<li><code>DB_INDEX</code></li>
+</ul>
+<h4 id="security-settings">Security settings</h4>
+<ul>
+<li><code>CORS_ORIGINS</code></li>
+<li><code>ENCODING</code></li>
+<li><code>OAUTH_ACCESS_TOKEN_EXPIRE_MINUTES</code></li>
+</ul>
+<h4 id="execution-settings">Execution settings</h4>
+<ul>
+<li><code>TASK_RETRY_COUNT</code></li>
+<li><code>TASK_RETRY_DELAY</code></li>
+<li><code>TASK_RETRY_BACKOFF</code></li>
+</ul>
+<p>For more information please see the <a href="/docs#/Config">api docs</a>.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <!--
+  Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+
+
+<!-- Footer -->
+<footer class="md-footer">
+
+  <!-- Link to previous and/or next page -->
+  
+    <nav
+      class="md-footer__inner md-grid"
+      aria-label="Footer"
+    >
+
+      <!-- Link to previous page -->
+      
+        
+        <a
+          href="../onetrust/"
+          class="md-footer__link md-footer__link--prev"
+          aria-label="Previous: Configure OneTrust Integration"
+          rel="prev"
+        >
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Configure OneTrust Integration
+            </div>
+          </div>
+        </a>
+      
+
+      <!-- Link to next page -->
+      
+        
+        <a
+          href="../../deployment/"
+          class="md-footer__link md-footer__link--next"
+          aria-label="Next: Deployment Guide"
+          rel="next"
+        >
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Deployment Guide
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+
+
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56a63758.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      
+    
+  </body>
+</html>

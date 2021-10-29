@@ -1,0 +1,4105 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "fidesops",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/config": {
+      "get": {
+        "tags": [
+          "Config"
+        ],
+        "summary": "Get Config",
+        "description": "Returns the current API exposable Fidesops configuration.",
+        "operationId": "get_config_api_v1_config_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Config Api V1 Config Get",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "config:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/connection": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Get Connections",
+        "description": "Returns all connection configurations in the database.",
+        "operationId": "get_connections_api_v1_connection_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Page",
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Size",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 50
+            },
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_ConnectionConfigurationResponse_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "connection:read"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Put Connections",
+        "description": "Given a list of connection config data elements, create or update corresponding ConnectionConfig objects\nor report failure\n\nIf the key in the payload exists, it will be used to update an existing ConnectionConfiguration.\nOtherwise, a new ConnectionConfiguration will be created for you.\n\nNote that ConnectionConfiguration.secrets are not updated through this endpoint.",
+        "operationId": "put_connections_api_v1_connection_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Configs",
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateConnectionConfiguration"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkPutConnectionConfiguration"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "connection:create_or_update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/connection/{connection_key}": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Get Connection Detail",
+        "description": "Returns connection configuration with matching key.",
+        "operationId": "get_connection_detail_api_v1_connection__connection_key__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Connection Key",
+              "type": "string"
+            },
+            "name": "connection_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionConfigurationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "connection:read"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Delete Connection",
+        "description": "Removes the connection configuration with matching key.",
+        "operationId": "delete_connection_api_v1_connection__connection_key__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Connection Key",
+              "type": "string"
+            },
+            "name": "connection_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "connection:delete"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/connection/{connection_key}/secret": {
+      "put": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Put Connection Config Secrets",
+        "description": "Update secrets that will be used to connect to a specified connection_type.\n\nThe specific secrets will be connection-dependent. For example, the components needed to connect to a Postgres DB\nwill differ from Dynamo DB.",
+        "operationId": "put_connection_config_secrets_api_v1_connection__connection_key__secret_put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Connection Key",
+              "type": "string"
+            },
+            "name": "connection_key",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Verify",
+              "type": "boolean",
+              "default": true
+            },
+            "name": "verify",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestStatusMessage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "connection:create_or_update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/connection/{connection_key}/test": {
+      "get": {
+        "tags": [
+          "Connections"
+        ],
+        "summary": "Test Connection Config Secrets",
+        "description": "Endpoint to test a connection at any time using the saved configuration secrets.",
+        "operationId": "test_connection_config_secrets_api_v1_connection__connection_key__test_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Connection Key",
+              "type": "string"
+            },
+            "name": "connection_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestStatusMessage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "connection:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/connection/{connection_key}/validate_dataset": {
+      "put": {
+        "tags": [
+          "Datasets"
+        ],
+        "summary": "Validate Dataset",
+        "description": "Run validations against a dataset without attempting to save it to the database.\n\nChecks that:\n- all required fields are present, all field values are valid types\n- all DataCategory values reference known keys\n- etc.\n\nAfter validating, also tests to see if the dataset is traversable. Note that\nit's possible for a dataset to be valid but not traversable; this happens\nwhen a dataset is dependent on references to other datasets.\n\nReturns a 200 OK for all valid datasets, and a traversal_details object with\ninformation about the traversal (or traversal errors).",
+        "operationId": "validate_dataset_api_v1_connection__connection_key__validate_dataset_put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Connection Key",
+              "type": "string"
+            },
+            "name": "connection_key",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FidesopsDataset"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidateDatasetResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "dataset:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/connection/{connection_key}/dataset": {
+      "get": {
+        "tags": [
+          "Datasets"
+        ],
+        "summary": "Get Datasets",
+        "description": "Returns all datasets in the database.",
+        "operationId": "get_datasets_api_v1_connection__connection_key__dataset_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Connection Key",
+              "type": "string"
+            },
+            "name": "connection_key",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Page",
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Size",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 50
+            },
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_FidesopsDataset_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "dataset:read"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Datasets"
+        ],
+        "summary": "Put Datasets",
+        "description": "Given a list of dataset elements, create or update corresponding Dataset objects\nor report failure\n\nUse for bulk creating and/or updating datasets.\n\nIf the fides_key for a given dataset exists, it will be treated as an update.\nOtherwise, a new dataset will be created.",
+        "operationId": "put_datasets_api_v1_connection__connection_key__dataset_put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Connection Key",
+              "type": "string"
+            },
+            "name": "connection_key",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Datasets",
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FidesopsDataset"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkPutDataset"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "dataset:create_or_update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/connection/{connection_key}/dataset/{fides_key}": {
+      "get": {
+        "tags": [
+          "Datasets"
+        ],
+        "summary": "Get Dataset",
+        "description": "Returns a single dataset based on the given key.",
+        "operationId": "get_dataset_api_v1_connection__connection_key__dataset__fides_key__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Fides Key",
+              "type": "string"
+            },
+            "name": "fides_key",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Connection Key",
+              "type": "string"
+            },
+            "name": "connection_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FidesopsDataset"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "dataset:read"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Datasets"
+        ],
+        "summary": "Delete Dataset",
+        "description": "Removes the dataset based on the given key.",
+        "operationId": "delete_dataset_api_v1_connection__connection_key__dataset__fides_key__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Fides Key",
+              "type": "string"
+            },
+            "name": "fides_key",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Connection Key",
+              "type": "string"
+            },
+            "name": "connection_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "dataset:delete"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/cryptography/encryption/key": {
+      "get": {
+        "tags": [
+          "Encryption"
+        ],
+        "summary": "Get Encryption Key",
+        "operationId": "get_encryption_key_api_v1_cryptography_encryption_key_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Encryption Key Api V1 Cryptography Encryption Key Get",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "encryption:exec"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/cryptography/encryption/aes/encrypt": {
+      "put": {
+        "tags": [
+          "Encryption"
+        ],
+        "summary": "Aes Encrypt",
+        "operationId": "aes_encrypt_api_v1_cryptography_encryption_aes_encrypt_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AesEncryptionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AesEncryptionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "encryption:exec"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/cryptography/encryption/aes/decrypt": {
+      "put": {
+        "tags": [
+          "Encryption"
+        ],
+        "summary": "Aes Decrypt",
+        "operationId": "aes_decrypt_api_v1_cryptography_encryption_aes_decrypt_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AesDecryptionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AesDecryptionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "encryption:exec"
+            ]
+          }
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Health Check",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Health Check Health Get",
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/masking/mask": {
+      "put": {
+        "tags": [
+          "Masking"
+        ],
+        "summary": "Mask Value",
+        "description": "Masks the value provided using the provided masking strategy",
+        "operationId": "mask_value_api_v1_masking_mask_put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Value",
+              "type": "string"
+            },
+            "name": "value",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PolicyMaskingSpec"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaskingAPIResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/masking/strategy": {
+      "get": {
+        "tags": [
+          "Masking"
+        ],
+        "summary": "List Masking Strategies",
+        "description": "Lists available masking strategies with instructions on how to use them",
+        "operationId": "list_masking_strategies_api_v1_masking_strategy_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response List Masking Strategies Api V1 Masking Strategy Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MaskingStrategyDescription"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oauth/token": {
+      "post": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Acquire Access Token",
+        "description": "Given a set of credentials, returns an access token if they are correct. Raises 401\nexception if not",
+        "operationId": "acquire_access_token_api_v1_oauth_token_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_acquire_access_token_api_v1_oauth_token_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessToken"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oauth/client": {
+      "post": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Create Client",
+        "description": "Creates a new client and returns the credentials",
+        "operationId": "create_client_api_v1_oauth_client_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Scopes",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientCreatedResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "client:create"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/oauth/client/{client_id}": {
+      "delete": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Delete Client",
+        "description": "Deletes the client associated with the client_id. Does nothing if the client does\nnot exist",
+        "operationId": "delete_client_api_v1_oauth_client__client_id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Client Id",
+              "type": "string"
+            },
+            "name": "client_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "client:delete"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/oauth/client/{client_id}/scope": {
+      "get": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Get Client Scopes",
+        "description": "Returns a list of the scopes associated with the client. Returns an empty list if client does not exist.",
+        "operationId": "get_client_scopes_api_v1_oauth_client__client_id__scope_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Client Id",
+              "type": "string"
+            },
+            "name": "client_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Client Scopes Api V1 Oauth Client  Client Id  Scope Get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "client:read"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Set Client Scopes",
+        "description": "Overwrites the client's scopes with those provided. Does nothing if the client doesn't exist",
+        "operationId": "set_client_scopes_api_v1_oauth_client__client_id__scope_put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Client Id",
+              "type": "string"
+            },
+            "name": "client_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Scopes",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "client:update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/oauth/scope": {
+      "get": {
+        "tags": [
+          "OAuth"
+        ],
+        "summary": "Read Scopes",
+        "description": "Returns a list of all scopes available for assignment in the system",
+        "operationId": "read_scopes_api_v1_oauth_scope_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Read Scopes Api V1 Oauth Scope Get",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "scope:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/policy": {
+      "get": {
+        "tags": [
+          "Policy"
+        ],
+        "summary": "Get Policy List",
+        "description": "Return a paginated list of all Policy records in this system",
+        "operationId": "get_policy_list_api_v1_policy_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Page",
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Size",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 50
+            },
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_PolicyResponse_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "policy:read"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Policy"
+        ],
+        "summary": "Create Or Update Policies",
+        "description": "Given a list of policy data elements, create or update corresponding Policy objects\nor report failure",
+        "operationId": "create_or_update_policies_api_v1_policy_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Data",
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Policy"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkPutPolicyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "policy:create_or_update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/policy/{policy_key}": {
+      "get": {
+        "tags": [
+          "Policy"
+        ],
+        "summary": "Get Policy",
+        "description": "Return a single Policy",
+        "operationId": "get_policy_api_v1_policy__policy_key__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Policy Key",
+              "type": "string"
+            },
+            "name": "policy_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "policy:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/policy/{policy_key}/rule": {
+      "put": {
+        "tags": [
+          "Policy"
+        ],
+        "summary": "Create Or Update Rules",
+        "description": "Given a list of Rule data elements, create or update corresponding Rule objects\nor report failure",
+        "operationId": "create_or_update_rules_api_v1_policy__policy_key__rule_put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Policy Key",
+              "type": "string"
+            },
+            "name": "policy_key",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Input Data",
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RuleCreate"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkPutRuleResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "rule:create_or_update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/policy/{policy_key}/rule/{rule_key}": {
+      "delete": {
+        "tags": [
+          "Policy"
+        ],
+        "summary": "Delete Rule",
+        "description": "Delete a policy rule.",
+        "operationId": "delete_rule_api_v1_policy__policy_key__rule__rule_key__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Policy Key",
+              "type": "string"
+            },
+            "name": "policy_key",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Rule Key",
+              "type": "string"
+            },
+            "name": "rule_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "rule:delete"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/policy/{policy_key}/rule/{rule_key}/target": {
+      "put": {
+        "tags": [
+          "Policy"
+        ],
+        "summary": "Create Or Update Rule Targets",
+        "description": "Given a list of Rule data elements, create corresponding Rule objects\nor report failure",
+        "operationId": "create_or_update_rule_targets_api_v1_policy__policy_key__rule__rule_key__target_put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Policy Key",
+              "type": "string"
+            },
+            "name": "policy_key",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Rule Key",
+              "type": "string"
+            },
+            "name": "rule_key",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Input Data",
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RuleTarget"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkPutRuleTargetResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "rule:create_or_update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/policy/{policy_key}/rule/{rule_key}/target/{rule_target_key}": {
+      "delete": {
+        "tags": [
+          "Policy"
+        ],
+        "summary": "Delete Rule Target",
+        "description": "Delete the rule target.",
+        "operationId": "delete_rule_target_api_v1_policy__policy_key__rule__rule_key__target__rule_target_key__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Policy Key",
+              "type": "string"
+            },
+            "name": "policy_key",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Rule Key",
+              "type": "string"
+            },
+            "name": "rule_key",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Rule Target Key",
+              "type": "string"
+            },
+            "name": "rule_target_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "rule:delete"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/privacy-request": {
+      "get": {
+        "tags": [
+          "Privacy Requests"
+        ],
+        "summary": "Get Request Status",
+        "description": "Returns PrivacyRequest information. Supports a variety of optional query params.\n\nTo fetch a single privacy request, use the id query param `?id=`.\nTo see individual execution logs, use the verbose query param `?verbose=True`.",
+        "operationId": "get_request_status_api_v1_privacy_request_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            },
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/PrivacyRequestStatus"
+            },
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Created Lt",
+              "type": "string",
+              "format": "date"
+            },
+            "name": "created_lt",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Created Gt",
+              "type": "string",
+              "format": "date"
+            },
+            "name": "created_gt",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Started Lt",
+              "type": "string",
+              "format": "date"
+            },
+            "name": "started_lt",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Started Gt",
+              "type": "string",
+              "format": "date"
+            },
+            "name": "started_gt",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Completed Lt",
+              "type": "string",
+              "format": "date"
+            },
+            "name": "completed_lt",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Completed Gt",
+              "type": "string",
+              "format": "date"
+            },
+            "name": "completed_gt",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Errored Lt",
+              "type": "string",
+              "format": "date"
+            },
+            "name": "errored_lt",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Errored Gt",
+              "type": "string",
+              "format": "date"
+            },
+            "name": "errored_gt",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "External Id",
+              "type": "string"
+            },
+            "name": "external_id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Verbose",
+              "type": "boolean",
+              "default": false
+            },
+            "name": "verbose",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Page",
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Size",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 50
+            },
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_Union_fidesops.schemas.privacy_request.PrivacyRequestVerboseResponse__fidesops.schemas.privacy_request.PrivacyRequestResponse__"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "privacy-request:read"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Privacy Requests"
+        ],
+        "summary": "Create Privacy Request",
+        "description": "Given a list of privacy request data elements, create corresponding PrivacyRequest objects\nor report failure and execute them within the FidesOps system.\n\nYou cannot update privacy requests after they've been created.",
+        "operationId": "create_privacy_request_api_v1_privacy_request_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Data",
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PrivacyRequestCreate"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkPostPrivacyRequests"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "privacy-request:create"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/privacy-request/{privacy_request_id}/log": {
+      "get": {
+        "tags": [
+          "Privacy Requests"
+        ],
+        "summary": "Get Request Status Logs",
+        "description": "Returns all the execution logs associated with a given privacy request ordered by updated asc.",
+        "operationId": "get_request_status_logs_api_v1_privacy_request__privacy_request_id__log_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Privacy Request Id",
+              "type": "string"
+            },
+            "name": "privacy_request_id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Page",
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Size",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 50
+            },
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_ExecutionLogDetailResponse_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "privacy-request:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/privacy-request/preview": {
+      "put": {
+        "tags": [
+          "Privacy Requests"
+        ],
+        "summary": "Get Request Preview Queries",
+        "description": "Returns dry run queries given a list of dataset ids",
+        "operationId": "get_request_preview_queries_api_v1_privacy_request_preview_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Dataset Keys",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Request Preview Queries Api V1 Privacy Request Preview Put",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DryRunDatasetResponse"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "privacy-request:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/storage/{request_id}": {
+      "post": {
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Upload Data",
+        "description": "Uploads data from a SAR to specified storage destination.\nReturns location of data.",
+        "operationId": "upload_data_api_v1_storage__request_id__post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Request Id",
+              "type": "string"
+            },
+            "name": "request_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_data_api_v1_storage__request_id__post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataUpload"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "storage:create_or_update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/storage/config": {
+      "get": {
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Get Configs",
+        "description": "Retrieves configs for storage.",
+        "operationId": "get_configs_api_v1_storage_config_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Page",
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Size",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "type": "integer",
+              "default": 50
+            },
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_StorageDestinationResponse_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "storage:read"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Put Config",
+        "description": "Given a list of storage destination elements, create or update corresponding StorageConfig objects\nor report failure.",
+        "operationId": "put_config_api_v1_storage_config_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Storage Configs",
+                "maxItems": 50,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/StorageDestination"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkPutStorageConfigResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "storage:create_or_update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/storage/config/{config_key}/secret": {
+      "put": {
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Put Config Secrets",
+        "description": "Add or update secrets for storage config.",
+        "operationId": "put_config_secrets_api_v1_storage_config__config_key__secret_put",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Config Key",
+              "type": "string"
+            },
+            "name": "config_key",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Verify",
+              "type": "boolean",
+              "default": true
+            },
+            "name": "verify",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Storage Secrets",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestStatusMessage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "storage:create_or_update"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/storage/config/{config_key}": {
+      "get": {
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Get Config By Key",
+        "description": "Retrieves configs for storage by key.",
+        "operationId": "get_config_by_key_api_v1_storage_config__config_key__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Config Key",
+              "type": "string"
+            },
+            "name": "config_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageDestinationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "storage:read"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Storage"
+        ],
+        "summary": "Delete Config By Key",
+        "description": "Deletes configs by key.",
+        "operationId": "delete_config_by_key_api_v1_storage_config__config_key__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Config Key",
+              "type": "string"
+            },
+            "name": "config_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2ClientCredentialsBearer": [
+              "storage:delete"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccessLevel": {
+        "title": "AccessLevel",
+        "enum": [
+          "read",
+          "write"
+        ],
+        "description": "Perms given to the ConnectionConfig.  For example, with \"read\" permissions, fides-ops promises\nto not modify the data on a connected application database in any way.\n\n\"Write\" perms mean we can update/delete items in the connected database."
+      },
+      "AccessToken": {
+        "title": "AccessToken",
+        "required": [
+          "access_token"
+        ],
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "title": "Access Token",
+            "type": "string"
+          }
+        },
+        "description": "A wrapper for the access_code returned upon successful authentication"
+      },
+      "ActionType": {
+        "title": "ActionType",
+        "enum": [
+          "access",
+          "consent",
+          "erasure",
+          "update"
+        ],
+        "description": "The purpose of a particular privacy request"
+      },
+      "AesDecryptionRequest": {
+        "title": "AesDecryptionRequest",
+        "required": [
+          "value",
+          "key",
+          "nonce"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "title": "Value",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "nonce": {
+            "title": "Nonce",
+            "type": "string"
+          }
+        },
+        "description": "Specifies fields provided to the AES Decryption endpoint"
+      },
+      "AesDecryptionResponse": {
+        "title": "AesDecryptionResponse",
+        "required": [
+          "decrypted_value"
+        ],
+        "type": "object",
+        "properties": {
+          "decrypted_value": {
+            "title": "Decrypted Value",
+            "type": "string"
+          }
+        },
+        "description": "Specified fields returned from the AES Decryption endpoint"
+      },
+      "AesEncryptionRequest": {
+        "title": "AesEncryptionRequest",
+        "required": [
+          "value",
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "title": "Value",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          }
+        },
+        "description": "Specifies fields provided to the AES Encryption endpoint"
+      },
+      "AesEncryptionResponse": {
+        "title": "AesEncryptionResponse",
+        "required": [
+          "encrypted_value",
+          "nonce"
+        ],
+        "type": "object",
+        "properties": {
+          "encrypted_value": {
+            "title": "Encrypted Value",
+            "type": "string"
+          },
+          "nonce": {
+            "title": "Nonce",
+            "type": "string"
+          }
+        },
+        "description": "Specifies fields returned from the AES Encryption endpoint"
+      },
+      "Body_acquire_access_token_api_v1_oauth_token_post": {
+        "title": "Body_acquire_access_token_api_v1_oauth_token_post",
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "title": "Grant Type",
+            "pattern": "client_credentials",
+            "type": "string"
+          },
+          "scope": {
+            "title": "Scope",
+            "type": "string",
+            "default": ""
+          },
+          "client_id": {
+            "title": "Client Id",
+            "type": "string"
+          },
+          "client_secret": {
+            "title": "Client Secret",
+            "type": "string"
+          }
+        }
+      },
+      "Body_upload_data_api_v1_storage__request_id__post": {
+        "title": "Body_upload_data_api_v1_storage__request_id__post",
+        "required": [
+          "data",
+          "storage_key"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "type": "object"
+          },
+          "storage_key": {
+            "title": "Storage Key",
+            "type": "string"
+          }
+        }
+      },
+      "BulkPostPrivacyRequests": {
+        "title": "BulkPostPrivacyRequests",
+        "required": [
+          "succeeded",
+          "failed"
+        ],
+        "type": "object",
+        "properties": {
+          "succeeded": {
+            "title": "Succeeded",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrivacyRequestResponse"
+            }
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkUpdateFailed"
+            }
+          }
+        },
+        "description": "Schema with mixed success/failure responses for Bulk Create of PrivacyRequest responses."
+      },
+      "BulkPutConnectionConfiguration": {
+        "title": "BulkPutConnectionConfiguration",
+        "required": [
+          "succeeded",
+          "failed"
+        ],
+        "type": "object",
+        "properties": {
+          "succeeded": {
+            "title": "Succeeded",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionConfigurationResponse"
+            }
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkUpdateFailed"
+            }
+          }
+        },
+        "description": "Schema with mixed success/failure responses for Bulk Create/Update of ConnectionConfiguration responses."
+      },
+      "BulkPutDataset": {
+        "title": "BulkPutDataset",
+        "required": [
+          "succeeded",
+          "failed"
+        ],
+        "type": "object",
+        "properties": {
+          "succeeded": {
+            "title": "Succeeded",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FidesopsDataset"
+            }
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkUpdateFailed"
+            }
+          }
+        },
+        "description": "Schema with mixed success/failure responses for Bulk Create/Update of Datasets."
+      },
+      "BulkPutPolicyResponse": {
+        "title": "BulkPutPolicyResponse",
+        "required": [
+          "succeeded",
+          "failed"
+        ],
+        "type": "object",
+        "properties": {
+          "succeeded": {
+            "title": "Succeeded",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PolicyResponse"
+            }
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkUpdateFailed"
+            }
+          }
+        },
+        "description": "Schema with mixed success/failure responses for Bulk Create/Update of Policy responses."
+      },
+      "BulkPutRuleResponse": {
+        "title": "BulkPutRuleResponse",
+        "required": [
+          "succeeded",
+          "failed"
+        ],
+        "type": "object",
+        "properties": {
+          "succeeded": {
+            "title": "Succeeded",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleResponse"
+            }
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkUpdateFailed"
+            }
+          }
+        },
+        "description": "Schema with mixed success/failure responses for Bulk Create/Update of Rule responses."
+      },
+      "BulkPutRuleTargetResponse": {
+        "title": "BulkPutRuleTargetResponse",
+        "required": [
+          "succeeded",
+          "failed"
+        ],
+        "type": "object",
+        "properties": {
+          "succeeded": {
+            "title": "Succeeded",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleTarget"
+            }
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkUpdateFailed"
+            }
+          }
+        },
+        "description": "Schema with mixed success/failure responses for Bulk Create/Update of RuleTarget responses."
+      },
+      "BulkPutStorageConfigResponse": {
+        "title": "BulkPutStorageConfigResponse",
+        "required": [
+          "succeeded",
+          "failed"
+        ],
+        "type": "object",
+        "properties": {
+          "succeeded": {
+            "title": "Succeeded",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StorageDestinationResponse"
+            }
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BulkUpdateFailed"
+            }
+          }
+        },
+        "description": "Schema with mixed success/failure responses for Bulk Create/Update of StorageConfig."
+      },
+      "BulkUpdateFailed": {
+        "title": "BulkUpdateFailed",
+        "required": [
+          "message",
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "data": {
+            "title": "Data",
+            "type": "object"
+          }
+        },
+        "description": "Schema for use when Bulk Create/Update fails."
+      },
+      "ClientCreatedResponse": {
+        "title": "ClientCreatedResponse",
+        "required": [
+          "client_id",
+          "client_secret"
+        ],
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "title": "Client Id",
+            "type": "string"
+          },
+          "client_secret": {
+            "title": "Client Secret",
+            "type": "string"
+          }
+        },
+        "description": "Response schema for client creation"
+      },
+      "CollectionAddressResponse": {
+        "title": "CollectionAddressResponse",
+        "type": "object",
+        "properties": {
+          "dataset": {
+            "title": "Dataset",
+            "type": "string"
+          },
+          "collection": {
+            "title": "Collection",
+            "type": "string"
+          }
+        },
+        "description": "Schema for the representation of a collection in the graph"
+      },
+      "ConnectionConfigurationResponse": {
+        "title": "ConnectionConfigurationResponse",
+        "required": [
+          "name",
+          "key",
+          "connection_type",
+          "access",
+          "created_at"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "connection_type": {
+            "$ref": "#/components/schemas/ConnectionType"
+          },
+          "access": {
+            "$ref": "#/components/schemas/AccessLevel"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_test_timestamp": {
+            "title": "Last Test Timestamp",
+            "type": "string",
+            "format": "date-time"
+          },
+          "last_test_succeeded": {
+            "title": "Last Test Succeeded",
+            "type": "boolean"
+          }
+        },
+        "description": "Describes the returned schema for a ConnectionConfiguration.\n\nDo *NOT* add \"secrets\" to this schema."
+      },
+      "ConnectionType": {
+        "title": "ConnectionType",
+        "enum": [
+          "postgres",
+          "mongodb",
+          "mysql",
+          "https"
+        ],
+        "description": "Supported types to which we can connect fides-ops."
+      },
+      "CreateConnectionConfiguration": {
+        "title": "CreateConnectionConfiguration",
+        "required": [
+          "name",
+          "connection_type",
+          "access"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "connection_type": {
+            "$ref": "#/components/schemas/ConnectionType"
+          },
+          "access": {
+            "$ref": "#/components/schemas/AccessLevel"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Schema for creating a ConnectionConfiguration\n\nNote that secrets are *NOT* allowed to be supplied here."
+      },
+      "DataUpload": {
+        "title": "DataUpload",
+        "required": [
+          "location"
+        ],
+        "type": "object",
+        "properties": {
+          "location": {
+            "title": "Location",
+            "type": "string"
+          }
+        },
+        "description": "A wrapper for the data upload location returned upon successful upload"
+      },
+      "DatasetTraversalDetails": {
+        "title": "DatasetTraversalDetails",
+        "required": [
+          "is_traversable"
+        ],
+        "type": "object",
+        "properties": {
+          "is_traversable": {
+            "title": "Is Traversable",
+            "type": "boolean"
+          },
+          "msg": {
+            "title": "Msg",
+            "type": "string"
+          }
+        },
+        "description": "Describes whether or not the parent dataset is traversable; if not, includes\nan error message describing the traversal issues."
+      },
+      "DryRunDatasetResponse": {
+        "title": "DryRunDatasetResponse",
+        "required": [
+          "collectionAddress"
+        ],
+        "type": "object",
+        "properties": {
+          "collectionAddress": {
+            "$ref": "#/components/schemas/CollectionAddressResponse"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          }
+        },
+        "description": "Response model for dataset dry run"
+      },
+      "ExecutionLogDetailResponse": {
+        "title": "ExecutionLogDetailResponse",
+        "required": [
+          "action_type",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "fields_affected": {
+            "title": "Fields Affected",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldsAffectedResponse"
+            }
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "action_type": {
+            "$ref": "#/components/schemas/ActionType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ExecutionLogStatus"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "dataset_name": {
+            "title": "Dataset Name",
+            "type": "string"
+          }
+        },
+        "description": "Schema for the detailed ExecutionLogs when accessed directly"
+      },
+      "ExecutionLogResponse": {
+        "title": "ExecutionLogResponse",
+        "required": [
+          "action_type",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "collection_name": {
+            "title": "Collection Name",
+            "type": "string"
+          },
+          "fields_affected": {
+            "title": "Fields Affected",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldsAffectedResponse"
+            }
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "action_type": {
+            "$ref": "#/components/schemas/ActionType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ExecutionLogStatus"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Schema for the embedded ExecutionLogs associated with a PrivacyRequest"
+      },
+      "ExecutionLogStatus": {
+        "title": "ExecutionLogStatus",
+        "enum": [
+          "in_processing",
+          "pending",
+          "complete",
+          "error",
+          "retrying"
+        ],
+        "description": "Enum for execution log statuses, reflecting where they are in their workflow"
+      },
+      "FidesDataCategory": {
+        "title": "FidesDataCategory",
+        "enum": [
+          "account",
+          "account.contact",
+          "account.contact.city",
+          "account.contact.country",
+          "account.contact.email",
+          "account.contact.phone_number",
+          "account.contact.postal_code",
+          "account.contact.state",
+          "account.contact.street",
+          "account.payment",
+          "account.payment.financial_account_number",
+          "system",
+          "system.authentication",
+          "system.operations",
+          "user",
+          "user.derived",
+          "user.derived.identifiable",
+          "user.derived.identifiable.biometric_health",
+          "user.derived.identifiable.browsing_history",
+          "user.derived.identifiable.demographic",
+          "user.derived.identifiable.contact",
+          "user.derived.identifiable.device",
+          "user.derived.identifiable.device.cookie_id",
+          "user.derived.identifiable.device.device_id",
+          "user.derived.identifiable.device.ip_address",
+          "user.derived.identifiable.gender",
+          "user.derived.identifiable.location",
+          "user.derived.identifiable.media_consumption",
+          "user.derived.identifiable.non_specific_age",
+          "user.derived.identifiable.observed",
+          "user.derived.identifiable.profiling",
+          "user.derived.identifiable.race",
+          "user.derived.identifiable.religious_belief",
+          "user.derived.identifiable.search_history",
+          "user.derived.identifiable.sexual_orientation",
+          "user.derived.identifiable.social",
+          "user.derived.identifiable.telemetry",
+          "user.derived.identifiable.unique_id",
+          "user.derived.identifiable.user_sensor",
+          "user.derived.identifiable.organization",
+          "user.derived.identifiable.workplace",
+          "user.derived.nonidentifiable",
+          "user.derived.nonidentifiable.sensor",
+          "user.provided",
+          "user.provided.identifiable",
+          "user.provided.identifiable.biometric",
+          "user.provided.identifiable.childrens",
+          "user.provided.identifiable.contact",
+          "user.provided.identifiable.contact.city",
+          "user.provided.identifiable.contact.country",
+          "user.provided.identifiable.contact.email",
+          "user.provided.identifiable.contact.phone_number",
+          "user.provided.identifiable.contact.postal_code",
+          "user.provided.identifiable.contact.state",
+          "user.provided.identifiable.contact.street",
+          "user.provided.identifiable.credentials",
+          "user.provided.identifiable.credentials.biometric_credentials",
+          "user.provided.identifiable.credentials.password",
+          "user.provided.identifiable.date_of_birth",
+          "user.provided.identifiable.financial",
+          "user.provided.identifiable.financial.account_number",
+          "user.provided.identifiable.gender",
+          "user.provided.identifiable.genetic",
+          "user.provided.identifiable.government_id",
+          "user.provided.identifiable.government_id.drivers_license_number",
+          "user.provided.identifiable.government_id.national_identification_number",
+          "user.provided.identifiable.government_id.passport_number",
+          "user.provided.identifiable.health_and_medical",
+          "user.provided.identifiable.job_title",
+          "user.provided.identifiable.name",
+          "user.provided.identifiable.non_specific_age",
+          "user.provided.identifiable.political_opinion",
+          "user.provided.identifiable.race",
+          "user.provided.identifiable.religious_belief",
+          "user.provided.identifiable.sexual_orientation",
+          "user.provided.identifiable.workplace",
+          "user.provided.nonidentifiable"
+        ],
+        "description": "An enumeration."
+      },
+      "FidesopsCollectionMeta": {
+        "title": "FidesopsCollectionMeta",
+        "type": "object",
+        "properties": {
+          "after": {
+            "title": "After",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "Collection-level fidesops-specific annotations used for query traversal"
+      },
+      "FidesopsDataset": {
+        "title": "FidesopsDataset",
+        "required": [
+          "fides_key",
+          "collections"
+        ],
+        "type": "object",
+        "properties": {
+          "fides_key": {
+            "title": "Fides Key",
+            "pattern": "^[a-zA-Z0-9_.]+$",
+            "type": "string",
+            "description": "A unique key used to identify this resource."
+          },
+          "organization_fides_key": {
+            "title": "Organization Fides Key",
+            "pattern": "^[a-zA-Z0-9_.]+$",
+            "type": "string",
+            "description": "Defines the Organization that this resource belongs to.",
+            "default": "default_organization"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "description": "Human-Readable string name for this resource."
+          },
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "description": "In-depth description of what this resource is."
+          },
+          "meta": {
+            "title": "Meta",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "data_categories": {
+            "title": "Data Categories",
+            "type": "array",
+            "items": {
+              "pattern": "^[a-zA-Z0-9_.]+$",
+              "type": "string"
+            }
+          },
+          "data_qualifiers": {
+            "title": "Data Qualifiers",
+            "type": "array",
+            "items": {
+              "pattern": "^[a-zA-Z0-9_.]+$",
+              "type": "string"
+            },
+            "default": [
+              "aggregated.anonymized.unlinked_pseudonymized.pseudonymized.identified"
+            ]
+          },
+          "collections": {
+            "title": "Collections",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FidesopsDatasetCollection"
+            }
+          },
+          "fidesops_meta": {
+            "$ref": "#/components/schemas/FidesopsDatasetMeta"
+          }
+        },
+        "description": "Overrides fideslang Collection model with additional Fidesops annotations"
+      },
+      "FidesopsDatasetCollection": {
+        "title": "FidesopsDatasetCollection",
+        "required": [
+          "name",
+          "fields"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "data_categories": {
+            "title": "Data Categories",
+            "type": "array",
+            "items": {
+              "pattern": "^[a-zA-Z0-9_.]+$",
+              "type": "string"
+            }
+          },
+          "data_qualifiers": {
+            "title": "Data Qualifiers",
+            "type": "array",
+            "items": {
+              "pattern": "^[a-zA-Z0-9_.]+$",
+              "type": "string"
+            },
+            "default": [
+              "aggregated.anonymized.unlinked_pseudonymized.pseudonymized.identified"
+            ]
+          },
+          "fields": {
+            "title": "Fields",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FidesopsDatasetField"
+            }
+          },
+          "fidesops_meta": {
+            "$ref": "#/components/schemas/FidesopsCollectionMeta"
+          }
+        },
+        "description": "Overrides fideslang DatasetCollection model with additional Fidesops annotations"
+      },
+      "FidesopsDatasetField": {
+        "title": "FidesopsDatasetField",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "data_categories": {
+            "title": "Data Categories",
+            "type": "array",
+            "items": {
+              "pattern": "^[a-zA-Z0-9_.]+$",
+              "type": "string"
+            }
+          },
+          "data_qualifier": {
+            "title": "Data Qualifier",
+            "pattern": "^[a-zA-Z0-9_.]+$",
+            "type": "string",
+            "default": "aggregated.anonymized.unlinked_pseudonymized.pseudonymized.identified"
+          },
+          "fidesops_meta": {
+            "$ref": "#/components/schemas/FidesopsMeta"
+          }
+        },
+        "description": "Extends fideslang DatasetField model with additional Fidesops annotations"
+      },
+      "FidesopsDatasetMeta": {
+        "title": "FidesopsDatasetMeta",
+        "type": "object",
+        "properties": {
+          "after": {
+            "title": "After",
+            "type": "array",
+            "items": {
+              "pattern": "^[a-zA-Z0-9_.]+$",
+              "type": "string"
+            }
+          }
+        },
+        "description": "\"Dataset-level fidesops-specific annotations used for query traversal"
+      },
+      "FidesopsDatasetReference": {
+        "title": "FidesopsDatasetReference",
+        "required": [
+          "dataset",
+          "field"
+        ],
+        "type": "object",
+        "properties": {
+          "dataset": {
+            "title": "Dataset",
+            "pattern": "^[a-zA-Z0-9_.]+$",
+            "type": "string"
+          },
+          "field": {
+            "title": "Field",
+            "type": "string"
+          },
+          "direction": {
+            "title": "Direction",
+            "enum": [
+              "from",
+              "to"
+            ],
+            "type": "string"
+          }
+        },
+        "description": "Reference to a field from another Collection"
+      },
+      "FidesopsMeta": {
+        "title": "FidesopsMeta",
+        "type": "object",
+        "properties": {
+          "references": {
+            "title": "References",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FidesopsDatasetReference"
+            }
+          },
+          "identity": {
+            "title": "Identity",
+            "type": "string"
+          },
+          "primary_key": {
+            "title": "Primary Key",
+            "type": "boolean"
+          }
+        },
+        "description": "Fidesops-specific annotations used for query traversal"
+      },
+      "FieldsAffectedResponse": {
+        "title": "FieldsAffectedResponse",
+        "type": "object",
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "field_name": {
+            "title": "Field Name",
+            "type": "string"
+          },
+          "data_categories": {
+            "title": "Data Categories",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "Schema detailing the individual fields affected by a particular query detailed in the ExecutionLog"
+      },
+      "FormatPreservationConfig": {
+        "title": "FormatPreservationConfig",
+        "required": [
+          "suffix"
+        ],
+        "type": "object",
+        "properties": {
+          "suffix": {
+            "title": "Suffix",
+            "type": "string"
+          }
+        },
+        "description": "option to preserve format in masking"
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "MaskingAPIResponse": {
+        "title": "MaskingAPIResponse",
+        "required": [
+          "plain",
+          "masked_value"
+        ],
+        "type": "object",
+        "properties": {
+          "plain": {
+            "title": "Plain",
+            "type": "string"
+          },
+          "masked_value": {
+            "title": "Masked Value",
+            "type": "string"
+          }
+        },
+        "description": "The API Response returned upon masking completion"
+      },
+      "MaskingStrategyConfigurationDescription": {
+        "title": "MaskingStrategyConfigurationDescription",
+        "required": [
+          "key",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "optional": {
+            "title": "Optional",
+            "type": "boolean",
+            "default": true
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          }
+        },
+        "description": "The description model for a specific configuration in a masking strategy"
+      },
+      "MaskingStrategyDescription": {
+        "title": "MaskingStrategyDescription",
+        "required": [
+          "name",
+          "description",
+          "configurations"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "configurations": {
+            "title": "Configurations",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaskingStrategyConfigurationDescription"
+            }
+          }
+        },
+        "description": "The description model for a masking strategy"
+      },
+      "Page_ConnectionConfigurationResponse_": {
+        "title": "Page[ConnectionConfigurationResponse]",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConnectionConfigurationResponse"
+            }
+          },
+          "total": {
+            "title": "Total",
+            "minimum": 0.0,
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "minimum": 1.0,
+            "type": "integer"
+          },
+          "size": {
+            "title": "Size",
+            "minimum": 1.0,
+            "type": "integer"
+          }
+        }
+      },
+      "Page_ExecutionLogDetailResponse_": {
+        "title": "Page[ExecutionLogDetailResponse]",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExecutionLogDetailResponse"
+            }
+          },
+          "total": {
+            "title": "Total",
+            "minimum": 0.0,
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "minimum": 1.0,
+            "type": "integer"
+          },
+          "size": {
+            "title": "Size",
+            "minimum": 1.0,
+            "type": "integer"
+          }
+        }
+      },
+      "Page_FidesopsDataset_": {
+        "title": "Page[FidesopsDataset]",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FidesopsDataset"
+            }
+          },
+          "total": {
+            "title": "Total",
+            "minimum": 0.0,
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "minimum": 1.0,
+            "type": "integer"
+          },
+          "size": {
+            "title": "Size",
+            "minimum": 1.0,
+            "type": "integer"
+          }
+        }
+      },
+      "Page_PolicyResponse_": {
+        "title": "Page[PolicyResponse]",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PolicyResponse"
+            }
+          },
+          "total": {
+            "title": "Total",
+            "minimum": 0.0,
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "minimum": 1.0,
+            "type": "integer"
+          },
+          "size": {
+            "title": "Size",
+            "minimum": 1.0,
+            "type": "integer"
+          }
+        }
+      },
+      "Page_StorageDestinationResponse_": {
+        "title": "Page[StorageDestinationResponse]",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StorageDestinationResponse"
+            }
+          },
+          "total": {
+            "title": "Total",
+            "minimum": 0.0,
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "minimum": 1.0,
+            "type": "integer"
+          },
+          "size": {
+            "title": "Size",
+            "minimum": 1.0,
+            "type": "integer"
+          }
+        }
+      },
+      "Page_Union_fidesops.schemas.privacy_request.PrivacyRequestVerboseResponse__fidesops.schemas.privacy_request.PrivacyRequestResponse__": {
+        "title": "Page[Union[fidesops.schemas.privacy_request.PrivacyRequestVerboseResponse, fidesops.schemas.privacy_request.PrivacyRequestResponse]]",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "title": "Items",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/PrivacyRequestVerboseResponse"
+                },
+                {
+                  "$ref": "#/components/schemas/PrivacyRequestResponse"
+                }
+              ]
+            }
+          },
+          "total": {
+            "title": "Total",
+            "minimum": 0.0,
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "minimum": 1.0,
+            "type": "integer"
+          },
+          "size": {
+            "title": "Size",
+            "minimum": 1.0,
+            "type": "integer"
+          }
+        }
+      },
+      "Policy": {
+        "title": "Policy",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          }
+        },
+        "description": "An external representation of a FidesOps Policy"
+      },
+      "PolicyMaskingSpec": {
+        "title": "PolicyMaskingSpec",
+        "required": [
+          "strategy",
+          "configuration"
+        ],
+        "type": "object",
+        "properties": {
+          "strategy": {
+            "title": "Strategy",
+            "type": "string"
+          },
+          "configuration": {
+            "title": "Configuration",
+            "type": "object",
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "#/components/schemas/FormatPreservationConfig"
+                }
+              ]
+            }
+          }
+        },
+        "description": "Models the masking strategy definition int the policy document"
+      },
+      "PolicyMaskingSpecResponse": {
+        "title": "PolicyMaskingSpecResponse",
+        "required": [
+          "strategy"
+        ],
+        "type": "object",
+        "properties": {
+          "strategy": {
+            "title": "Strategy",
+            "type": "string"
+          }
+        },
+        "description": "The schema to use when returning a masking strategy via the API. This schema omits other\npotentially sensitive fields in the masking configuration, for example the encryption\nalgorithm."
+      },
+      "PolicyResponse": {
+        "title": "PolicyResponse",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "rules": {
+            "title": "Rules",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RuleResponse"
+            }
+          }
+        },
+        "description": "A holistic view of a Policy record, including all foreign keys by default."
+      },
+      "PrivacyRequestCreate": {
+        "title": "PrivacyRequestCreate",
+        "required": [
+          "requested_at",
+          "identities",
+          "policy_key"
+        ],
+        "type": "object",
+        "properties": {
+          "external_id": {
+            "title": "External Id",
+            "type": "string"
+          },
+          "started_processing_at": {
+            "title": "Started Processing At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "finished_processing_at": {
+            "title": "Finished Processing At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "requested_at": {
+            "title": "Requested At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "identities": {
+            "title": "Identities",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PrivacyRequestIdentity"
+            }
+          },
+          "policy_key": {
+            "title": "Policy Key",
+            "type": "string"
+          }
+        },
+        "description": "Data required to create a PrivacyRequest"
+      },
+      "PrivacyRequestIdentity": {
+        "title": "PrivacyRequestIdentity",
+        "type": "object",
+        "properties": {
+          "phone_number": {
+            "title": "Phone Number",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          }
+        },
+        "description": "Some PII grouping pertaining to a human"
+      },
+      "PrivacyRequestResponse": {
+        "title": "PrivacyRequestResponse",
+        "required": [
+          "id",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "started_processing_at": {
+            "title": "Started Processing At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "finished_processing_at": {
+            "title": "Finished Processing At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PrivacyRequestStatus"
+          },
+          "external_id": {
+            "title": "External Id",
+            "type": "string"
+          }
+        },
+        "description": "Schema to check the status of a PrivacyRequest"
+      },
+      "PrivacyRequestStatus": {
+        "title": "PrivacyRequestStatus",
+        "enum": [
+          "in_processing",
+          "pending",
+          "complete",
+          "error"
+        ],
+        "description": "Enum for privacy request statuses, reflecting where they are in the Privacy Request Lifecycle"
+      },
+      "PrivacyRequestVerboseResponse": {
+        "title": "PrivacyRequestVerboseResponse",
+        "required": [
+          "id",
+          "status",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "started_processing_at": {
+            "title": "Started Processing At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "finished_processing_at": {
+            "title": "Finished Processing At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PrivacyRequestStatus"
+          },
+          "external_id": {
+            "title": "External Id",
+            "type": "string"
+          },
+          "results": {
+            "title": "Results",
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ExecutionLogResponse"
+              }
+            }
+          }
+        },
+        "description": "The schema for the more detailed PrivacyRequest response containing detailed execution logs."
+      },
+      "ResponseFormat": {
+        "title": "ResponseFormat",
+        "enum": [
+          "json",
+          "csv"
+        ],
+        "description": "Response formats"
+      },
+      "RuleCreate": {
+        "title": "RuleCreate",
+        "required": [
+          "name",
+          "action_type"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "action_type": {
+            "$ref": "#/components/schemas/ActionType"
+          },
+          "storage_destination_key": {
+            "title": "Storage Destination Key",
+            "type": "string"
+          },
+          "masking_strategy": {
+            "$ref": "#/components/schemas/PolicyMaskingSpec"
+          }
+        },
+        "description": "The schema to use when creating a Rule. This schema accepts a storage_destination_key\nover a composite object."
+      },
+      "RuleResponse": {
+        "title": "RuleResponse",
+        "required": [
+          "name",
+          "action_type"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "action_type": {
+            "$ref": "#/components/schemas/ActionType"
+          },
+          "storage_destination": {
+            "$ref": "#/components/schemas/StorageDestinationResponse"
+          },
+          "masking_strategy": {
+            "$ref": "#/components/schemas/PolicyMaskingSpecResponse"
+          }
+        },
+        "description": "The schema to use when returning a Rule via the API. This schema uses a censored version\nof the `PolicyMaskingSpec` that omits the configuration to avoid exposing secrets."
+      },
+      "RuleTarget": {
+        "title": "RuleTarget",
+        "required": [
+          "data_category"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "data_category": {
+            "$ref": "#/components/schemas/FidesDataCategory"
+          }
+        },
+        "description": "An external representation of a Rule's target DataCategory within a Fidesops Policy"
+      },
+      "StorageDestination": {
+        "title": "StorageDestination",
+        "required": [
+          "name",
+          "type",
+          "details"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/StorageType"
+          },
+          "details": {
+            "title": "Details",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StorageDetailsS3"
+              },
+              {
+                "$ref": "#/components/schemas/StorageDetailsOneTrust"
+              },
+              {
+                "$ref": "#/components/schemas/StorageDetailsLocal"
+              }
+            ]
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "format": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponseFormat"
+              }
+            ],
+            "default": "json"
+          }
+        },
+        "description": "Storage Destination Schema"
+      },
+      "StorageDestinationResponse": {
+        "title": "StorageDestinationResponse",
+        "required": [
+          "name",
+          "type",
+          "details",
+          "key",
+          "format"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/StorageType"
+          },
+          "details": {
+            "title": "Details",
+            "type": "object"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "format": {
+            "$ref": "#/components/schemas/ResponseFormat"
+          }
+        },
+        "description": "Storage Destination Response Schema"
+      },
+      "StorageDetailsLocal": {
+        "title": "StorageDetailsLocal",
+        "type": "object",
+        "properties": {
+          "naming": {
+            "title": "Naming",
+            "type": "string",
+            "default": "request_id"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The details required to configurate local storage configuration"
+      },
+      "StorageDetailsOneTrust": {
+        "title": "StorageDetailsOneTrust",
+        "required": [
+          "service_name",
+          "onetrust_polling_hr",
+          "onetrust_polling_day_of_week"
+        ],
+        "type": "object",
+        "properties": {
+          "service_name": {
+            "title": "Service Name",
+            "type": "string"
+          },
+          "onetrust_polling_hr": {
+            "title": "Onetrust Polling Hr",
+            "type": "integer"
+          },
+          "onetrust_polling_day_of_week": {
+            "title": "Onetrust Polling Day Of Week",
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The details required to represent a OneTrust storage configuration."
+      },
+      "StorageDetailsS3": {
+        "title": "StorageDetailsS3",
+        "required": [
+          "bucket",
+          "object_name"
+        ],
+        "type": "object",
+        "properties": {
+          "naming": {
+            "title": "Naming",
+            "type": "string",
+            "default": "request_id"
+          },
+          "bucket": {
+            "title": "Bucket",
+            "type": "string"
+          },
+          "object_name": {
+            "title": "Object Name",
+            "type": "string"
+          },
+          "max_retries": {
+            "title": "Max Retries",
+            "type": "integer",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "description": "The details required to represent an AWS S3 storage bucket."
+      },
+      "StorageType": {
+        "title": "StorageType",
+        "enum": [
+          "s3",
+          "gcs",
+          "transcend",
+          "onetrust",
+          "ethyca",
+          "local"
+        ],
+        "description": "Enum for storage destination types"
+      },
+      "TestStatusMessage": {
+        "title": "TestStatusMessage",
+        "required": [
+          "msg"
+        ],
+        "type": "object",
+        "properties": {
+          "msg": {
+            "title": "Msg",
+            "type": "string"
+          },
+          "test_status": {
+            "title": "Test Status",
+            "type": "string"
+          },
+          "failure_reason": {
+            "title": "Failure Reason",
+            "type": "string"
+          }
+        },
+        "description": "A schema for checking status."
+      },
+      "ValidateDatasetResponse": {
+        "title": "ValidateDatasetResponse",
+        "required": [
+          "dataset",
+          "traversal_details"
+        ],
+        "type": "object",
+        "properties": {
+          "dataset": {
+            "$ref": "#/components/schemas/FidesopsDataset"
+          },
+          "traversal_details": {
+            "$ref": "#/components/schemas/DatasetTraversalDetails"
+          }
+        },
+        "description": "Response model for validating a dataset, which includes both the dataset\nitself (if valid) plus a details object describing if the dataset is\ntraversable or not."
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2ClientCredentialsBearer": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "scopes": {},
+            "tokenUrl": "/api/v1/oauth/token"
+          }
+        }
+      }
+    }
+  }
+}

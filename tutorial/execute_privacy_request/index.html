@@ -1,0 +1,1209 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="canonical" href="https://ethyca.github.io/fidesops/tutorial/execute_privacy_request/">
+      
+      <link rel="icon" href="../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.2.5">
+    
+    
+      
+        <title>Executing a Privacy Request - Fidesops</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.be71726b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700%7C&display=fallback">
+        <style>:root{--md-text-font-family:"Source Sans Pro";--md-code-font-family:""}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+    
+      <link rel="stylesheet" href="../../css/fides.css">
+    
+      <link rel="stylesheet" href="../../css/api.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#execute-a-privacy-request" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Fidesops" class="md-header__button md-logo" aria-label="Fidesops" data-md-component="logo">
+      
+  <img src="../../img/fides-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fidesops
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Executing a Privacy Request
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m10-3a5 5 0 0 1 5 5 5 5 0 0 1-5 5H7a5 5 0 0 1-5-5 5 5 0 0 1 5-5h10M7 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3h10a3 3 0 0 0 3-3 3 3 0 0 0-3-3H7z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Fidesops" class="md-nav__button md-logo" aria-label="Fidesops" data-md-component="logo">
+      
+  <img src="../../img/fides-logo.svg" alt="logo">
+
+    </a>
+    Fidesops
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        What is Fidesops?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../use_cases/" class="md-nav__link">
+        Use Cases
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Zero to Privacy Request
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        Installing Fidesops
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../outline/" class="md-nav__link">
+        Outlining our Python Script
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oauth_client/" class="md-nav__link">
+        Creating an Oauth Client
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../postgres_connection/" class="md-nav__link">
+        Connecting to Postgres
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../annotate_datasets/" class="md-nav__link">
+        Annotating our Database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage_config/" class="md-nav__link">
+        Configuring our Storage Destination
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../define_policy/" class="md-nav__link">
+        Defining a Policy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Executing a Privacy Request
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Executing a Privacy Request
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#see-a-privacy-request-in-action" class="md-nav__link">
+    See a Privacy Request in Action
+  </a>
+  
+    <nav class="md-nav" aria-label="See a Privacy Request in Action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-helper-method" class="md-nav__link">
+    Define helper method
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-helper-method-to-run-privacy-request" class="md-nav__link">
+    Call helper method to run Privacy Request
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execute-our-privacy-request" class="md-nav__link">
+    Execute our Privacy Request
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    Issues?
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        How-To Guides
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="How-To Guides" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          How-To Guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/oauth/" class="md-nav__link">
+        Authenticate with OAuth
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/database_connectors/" class="md-nav__link">
+        Connect SQL and NoSQL Databases
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/datasets/" class="md-nav__link">
+        Configure Datasets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/query_execution/" class="md-nav__link">
+        Preview Query Execution
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/policies/" class="md-nav__link">
+        Create Request Policies
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/masking_strategies/" class="md-nav__link">
+        Configure Data Masking Strategies
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/storage/" class="md-nav__link">
+        Configure Storage Destinations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/privacy_requests/" class="md-nav__link">
+        Execute Privacy Requests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reporting/" class="md-nav__link">
+        Report on Privacy Requests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/onetrust/" class="md-nav__link">
+        Configure OneTrust Integration
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/configuration_reference/" class="md-nav__link">
+        Configuration Reference
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../deployment/" class="md-nav__link">
+        Deployment Guide
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      <label class="md-nav__link" for="__nav_8">
+        Development
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/code_style/" class="md-nav__link">
+        Code Style
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/documentation/" class="md-nav__link">
+        Documentation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/pull_requests/" class="md-nav__link">
+        Pull Requests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/releases/" class="md-nav__link">
+        Releases
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      <label class="md-nav__link" for="__nav_9">
+        Community
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Community" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../community/github/" class="md-nav__link">
+        GitHub
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../community/code_of_conduct/" class="md-nav__link">
+        Code of Conduct
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ethyca/" class="md-nav__link">
+        About Ethyca
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        License
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#see-a-privacy-request-in-action" class="md-nav__link">
+    See a Privacy Request in Action
+  </a>
+  
+    <nav class="md-nav" aria-label="See a Privacy Request in Action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-helper-method" class="md-nav__link">
+    Define helper method
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#call-helper-method-to-run-privacy-request" class="md-nav__link">
+    Call helper method to run Privacy Request
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execute-our-privacy-request" class="md-nav__link">
+    Execute our Privacy Request
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    Issues?
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="execute-a-privacy-request">Execute a Privacy Request</h1>
+<h2 id="see-a-privacy-request-in-action">See a Privacy Request in Action</h2>
+<p>For more detailed information, <a href="../../guides/privacy_requests/">see the Privacy Request Guide</a>.</p>
+<hr />
+<p>To summarize so far, we have:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>1) Created a client for authentication
+2) Created a connection from fidesops to our Flask App&#39;s Postgres Database
+3) Uploaded an annotated Dataset to fidesops so it knows how to traverse through the Flask App&#39;s tables
+4) Defined where to upload our user data after we&#39;ve retrieved it from the Flask App
+5) Defined Policies describing what data we&#39;re looking for and what to do with that data.
+</code></pre></div>
+</td></tr></table>
+<p>For our last step, we'll write a method that will let us create a Privacy Request.  We need to specify the
+Policy we want applied to that Privacy Request, as well as the starting Identities of the user we'll need
+to locate the remaining user information:</p>
+<h3 id="define-helper-method">Define helper method</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_privacy_request</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">policy_key</span><span class="p">,</span> <span class="n">access_token</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a Privacy Request that is executed against the given request Policy.</span>
+<span class="sd">    Returns the response JSON if successful, or throws an error otherwise.</span>
+<span class="sd">    See http://localhost:8000/docs#/Privacy%20Requests/create_privacy_request_api_v1_privacy_request_post</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">privacy_request_data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;requested_at&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+            <span class="s2">&quot;policy_key&quot;</span><span class="p">:</span> <span class="n">policy_key</span><span class="p">,</span>
+            <span class="s2">&quot;identities&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">email</span><span class="p">}],</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FIDESOPS_URL</span><span class="si">}</span><span class="s2">/api/v1/privacy-request&quot;</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">oauth_headers</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="n">access_token</span><span class="p">),</span>
+        <span class="n">json</span><span class="o">=</span><span class="n">privacy_request_data</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Executing a Privacy Request. Status </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Check fidesdemo/fidesuploads for upload package.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="call-helper-method-to-run-privacy-request">Call helper method to run Privacy Request</h3>
+<p>This will create a request to fetch for all user data with category <code>user.provided.identifiable</code> associated 
+with email <code>user@example.com</code> and save it to our local Storage destination, by specifying the email and the Policy.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="o">...</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="c1"># Execute a Privacy Request for user@example.com</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;user@example.com&quot;</span>
+    <span class="n">privacy_requests</span> <span class="o">=</span> <span class="n">create_privacy_request</span><span class="p">(</span>
+        <span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span>
+        <span class="n">policy_key</span><span class="o">=</span><span class="s2">&quot;example-request-policy&quot;</span><span class="p">,</span>
+        <span class="n">access_token</span><span class="o">=</span><span class="n">access_token</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="execute-our-privacy-request">Execute our Privacy Request</h2>
+<p>In your terminal, within the <code>fidesdemo</code> directory, we'll run our script to execute the Privacy Request:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python3 flaskr/fidesops.py
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>INFO:__main__:Creating access token. Status <span class="m">200</span>
+INFO:__main__:Creating Oauth Client. Status <span class="m">200</span>
+INFO:__main__:Adding scopes to oauth client. Status <span class="m">200</span>
+INFO:__main__:Creating access token. Status <span class="m">200</span>
+INFO:__main__:Creating PostgreSQL ConnectionConfig. Status <span class="m">200</span>
+INFO:__main__:Updating PostgreSQL Secrets. Status <span class="m">200</span>.
+INFO:__main__:Defining an upload location. Status <span class="m">200</span>
+INFO:__main__:Creating an annotated Dataset. Status <span class="m">200</span>
+INFO:__main__:Creating a Policy. Status <span class="m">200</span>
+INFO:__main__:Creating a Rule. Status <span class="m">200</span>
+INFO:__main__:Creating a Rule Target. Status <span class="m">200</span>
+INFO:__main__:Executing a Privacy Request. Status <span class="m">200</span>
+INFO:__main__:Check fidesdemo/fidesuploads <span class="k">for</span> upload package.
+</code></pre></div>
+</td></tr></table>
+<p>Check your <code>fidesdemo/fides_uploads</code> directory for your data package:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;flaskr_postgres_dataset:products&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A description for example product #3&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Example Product 3&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;price&quot;</span><span class="p">:</span> <span class="mi">50</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;flaskr_postgres_dataset:purchases&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;city&quot;</span><span class="p">:</span> <span class="s2">&quot;Exampletown&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;state&quot;</span><span class="p">:</span> <span class="s2">&quot;NY&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;street_1&quot;</span><span class="p">:</span> <span class="s2">&quot;123 Example St&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;street_2&quot;</span><span class="p">:</span> <span class="s2">&quot;Apt 123&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;zip&quot;</span><span class="p">:</span> <span class="s2">&quot;12345&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;flaskr_postgres_dataset:users&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;user@example.com&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;first_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Example&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;User&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;pbkdf2:sha256:260000$PGcBy5NzZeDdlu0b$a91ee29eefad98920fe47a6ef4d53b5abffe593300f766f02de041af93ae51f8&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="issues">Issues?</h2>
+<ul>
+<li>Is <code>make server</code> running?</li>
+<li><a href="https://github.com/ethyca/fidesdemo/blob/main/flaskr/fidesops.py">Reference the full script here</a> for pieces you may be missing.<ul>
+<li>This script has more detailed logging and error handling.</li>
+</ul>
+</li>
+<li><a href="https://github.com/ethyca/fidesdemo/blob/main/fides_resources/flaskr_postgres_dataset.yml">Make sure your dataset is annotated properly</a></li>
+<li>Add breakpoints by inserting <code>import pdb; pdb.set_trace()</code> into the line where you want the breakpoint to set, then run your script.<ul>
+<li>Many of the endpoints used here are Bulk endpoints that return a 200 and then a mixture of a succeeded/failed resources.</li>
+</ul>
+</li>
+<li>Check the docker logs:
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>docker ps
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        Name                      Command               State                         Ports
+------------------------------------------------------------------------------------------------------------------
+fidesdemo_db_1         docker-entrypoint.sh postgres    Up      <span class="m">0</span>.0.0.0:5432-&gt;5432/tcp,:::5432-&gt;5432/tcp
+fidesdemo_fidesctl_1   fidesctl webserver               Up      <span class="m">0</span>.0.0.0:8080-&gt;8080/tcp,:::8080-&gt;8080/tcp
+fidesdemo_fidesops_1   fidesops webserver               Up      <span class="m">8000</span>/tcp, <span class="m">0</span>.0.0.0:8000-&gt;8080/tcp,:::8000-&gt;8080/tcp
+fidesdemo_redis_1      docker-entrypoint.sh redis ...   Up      <span class="m">0</span>.0.0.0:6379-&gt;6379/tcp,:::6379-&gt;6379/tcp 
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>docker logs fidesdemo_fidesops_1
+</code></pre></div>
+</td></tr></table></li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <!--
+  Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+
+
+<!-- Footer -->
+<footer class="md-footer">
+
+  <!-- Link to previous and/or next page -->
+  
+    <nav
+      class="md-footer__inner md-grid"
+      aria-label="Footer"
+    >
+
+      <!-- Link to previous page -->
+      
+        
+        <a
+          href="../define_policy/"
+          class="md-footer__link md-footer__link--prev"
+          aria-label="Previous: Defining a Policy"
+          rel="prev"
+        >
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Defining a Policy
+            </div>
+          </div>
+        </a>
+      
+
+      <!-- Link to next page -->
+      
+        
+        <a
+          href="../../glossary/"
+          class="md-footer__link md-footer__link--next"
+          aria-label="Next: Glossary"
+          rel="next"
+        >
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Glossary
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+
+
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.instant"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56a63758.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      
+    
+  </body>
+</html>
