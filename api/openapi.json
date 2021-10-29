@@ -3265,8 +3265,7 @@
       "MaskingAPIResponse": {
         "title": "MaskingAPIResponse",
         "required": [
-          "plain",
-          "masked_value"
+          "plain"
         ],
         "type": "object",
         "properties": {

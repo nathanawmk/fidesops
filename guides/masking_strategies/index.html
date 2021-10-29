@@ -486,9 +486,36 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-fidesops-as-a-masking-service" class="md-nav__link">
+    Using fidesops as a masking service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-masking-strategies" class="md-nav__link">
+    Supported Masking Strategies
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Masking Strategies">
+      <ul class="md-nav__list">
+        
           <li class="md-nav__item">
-  <a href="#supported-strategies" class="md-nav__link">
-    Supported Strategies
+  <a href="#supported-by-fidesops-policies" class="md-nav__link">
+    Supported by fidesops policies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-by-masking-service-only" class="md-nav__link">
+    Supported by masking service only
   </a>
   
 </li>
@@ -502,40 +529,6 @@
   <a href="#configuration" class="md-nav__link">
     Configuration
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#specifying-encryption-keys" class="md-nav__link">
-    Specifying Encryption Keys
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-fidesops-as-a-masking-service" class="md-nav__link">
-    Using Fidesops as a masking service
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Fidesops as a masking service">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-request" class="md-nav__link">
-    Example request
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sample-response" class="md-nav__link">
-    Sample response
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -896,9 +889,36 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-fidesops-as-a-masking-service" class="md-nav__link">
+    Using fidesops as a masking service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-masking-strategies" class="md-nav__link">
+    Supported Masking Strategies
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Masking Strategies">
+      <ul class="md-nav__list">
+        
           <li class="md-nav__item">
-  <a href="#supported-strategies" class="md-nav__link">
-    Supported Strategies
+  <a href="#supported-by-fidesops-policies" class="md-nav__link">
+    Supported by fidesops policies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-by-masking-service-only" class="md-nav__link">
+    Supported by masking service only
   </a>
   
 </li>
@@ -912,40 +932,6 @@
   <a href="#configuration" class="md-nav__link">
     Configuration
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#specifying-encryption-keys" class="md-nav__link">
-    Specifying Encryption Keys
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-fidesops-as-a-masking-service" class="md-nav__link">
-    Using Fidesops as a masking service
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Fidesops as a masking service">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-request" class="md-nav__link">
-    Example request
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sample-response" class="md-nav__link">
-    Sample response
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -992,59 +978,41 @@
                 <h1 id="how-to-configure-data-masking-strategies">How-To: Configure Data Masking Strategies</h1>
 <p>In this section we'll cover:</p>
 <ul>
-<li>What is a data masking?</li>
+<li>What is data masking?</li>
 <li>Why might you want to mask personally identifiable information rather than delete?</li>
+<li>How do you use fidesops as a masking service only?</li>
 <li>What are the currently-supported masking strategies in fidesops?</li>
 <li>How do you configure masking strategies for your fidesops policies?</li>
-<li>How do you use fidesops as a masking service only?</li>
 <li>How do you create your own masking strategies?</li>
 </ul>
 <h2 id="data-masking-basics">Data masking basics</h2>
 <p>Data masking is the process of obfuscating data in client systems, so it is no longer recognizable as PII (personally 
-identifiable information.)  </p>
+identifiable information.)</p>
 <p>For example, if a customer requests that your remove all information associated with their email,
 <code>test@example.com</code>, you might choose to "mask" that email with a random string, <code>xgoi4301nkyi79fjfdopvyjc5lnbr9</code>, and 
 their associated address with another random string <code>2ab6jghdg37uhkaz3hpyavpss1dvg2</code>.</p>
-<p>In FidesOps, your options to pseudonymize data are captured in masking strategies. </p>
+<p>It's important to remember that masking != anonymization. Since records are not deleted, a masked dataset is (at best)
+pseudonymized in most cases, and (at worst) may still be identifiable if the masking is reversible or easy to predict,
+which is a common mistake!</p>
+<p>In fidesops, your options to pseudonymize data are captured in "masking strategies". Fidesops supports a wide variety
+of masking strategies for different purposes when used directly as an API including HMAC, hashing, encryption, and 
+randomization. However, note that fidesops only supports the "null" strategy when processing privacy requests right now,
+but we'll be adding support for all masking strategies in an upcoming release!</p>
 <h3 id="why-mask-instead-of-delete">Why mask instead of delete?</h3>
 <p>Deleting customer data may involve entirely deleting a whole record (all attributes of the entity) or permanent and 
 irreversible anonymization of the record by updating specific fields within a record with masked values.</p>
 <p>Using a masking strategy instead of straight deletion to obscure PII helps ensure referential integrity in your 
-database.  For example, you might have an <code>orders</code> table with a foreign key to <code>user</code> without cascade delete. Say you first 
+database. For example, you might have an <code>orders</code> table with a foreign key to <code>user</code> without cascade delete. Say you first 
 deleted a user with email <code>test@example.com</code> without addressing their orders, you could potentially 
-have a lot of lingering orphans in the <code>orders</code> table. Using masking as a "soft delete" might be a safer strategy 
+have lingering orphans in the <code>orders</code> table. Using masking as a "soft delete" might be a safer strategy 
 depending on how your tables are defined.</p>
 <p>In order to ensure referential integrity is retained, any values that represent foreign keys must be consistently 
 updated with the same masked values across all sources.</p>
-<p>Other reasons to mask instead of delete include legal requirements that have you retain certain data for a certain length of time.  </p>
-<h3 id="supported-strategies">Supported Strategies</h3>
-<ul>
-<li><code>StringRewriteMaskingStrategy</code>: Masks the input value with a default string value</li>
-<li><code>HashMaskingStrategy</code>: Masks the input value by returning a hashed version of the input value</li>
-<li><code>RandomStringRewriteMaskingStrategy</code>: Masks the input value with a random string of a specified length</li>
-<li><code>AesEncryptionMaskingStrategy</code>: Masks by encrypting the value using AES</li>
-<li><code>HmacMaskingStrategy</code>: Masks the input value by using the HMAC algorithm along with a hashed version of the data and a secret key</li>
-</ul>
-<h2 id="configuration">Configuration</h2>
-<p>This is still in progress.  Big picture, you'll create a Policy, then you'll create a Rule for that policy.  On the
-Rule, you'll specify your masking strategy, and the config for that strategy.  </p>
-<p>When a <code>delete</code> query is executed, it needs to respect the masking strategy on the rule.</p>
-<p>TODO update docs when this is complete.</p>
-<h2 id="specifying-encryption-keys">Specifying Encryption Keys</h2>
-<ul>
-<li>How do I specify the encryption key to use for AES or HMAC?</li>
-<li>Alternatively, can the key be an auto-generated, one-time use key that is discarded?</li>
-</ul>
-<p>TODO update docs once this is complete.</p>
-<h2 id="using-fidesops-as-a-masking-service">Using Fidesops as a masking service</h2>
-<p>Send a PUT request to the masking endpoint with the value as the text you'd like pseudonymized to see an example 
-of how the masking strategy might obscure your data.</p>
-<p>See <a href="http://0.0.0.0:8080/docs#/Masking/mask_value_api_v1_masking_mask_put">Masking values API docs</a> on how to use fidesops to as a masking service </p>
-<p>You can also use this endpoint to test a specific masking strategy. </p>
-<h3 id="example-request">Example request</h3>
-<p>In this example, I want to mask email <code>test@example.com</code> with a random string of length 20, 
-and tack on a <code>@masked.com</code> to preserve the format.</p>
-<p><code>PUT /api/v1/masking/mask?value=test@example.com</code></p>
+<p>Other reasons to mask instead of delete include legal requirements that have you retain certain data for a certain length of time.</p>
+<h2 id="using-fidesops-as-a-masking-service">Using fidesops as a masking service</h2>
+<p>If you just want to use fidesops as a masking service, you can send a PUT request to the masking endpoint with the 
+value you'd like pseudonymized. This endpoint is also useful for getting a feel of how the different masking strategies work.</p>
+<p>Example: <code>PUT /masking/mask?value=test@example.com</code></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1054,33 +1022,85 @@ and tack on a <code>@masked.com</code> to preserve the format.</p>
 <span class="normal"> 7</span>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code> <span class="p">{</span>
-    <span class="nt">&quot;strategy&quot;</span><span class="p">:</span> <span class="s2">&quot;random_string_rewrite&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;configuration&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;length&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
-        <span class="nt">&quot;format_preservation&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;@masked.com&quot;</span>
-        <span class="p">}</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>     <span class="p">{</span>
+        <span class="nt">&quot;strategy&quot;</span><span class="p">:</span> <span class="s2">&quot;random_string_rewrite&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;configuration&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;length&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+            <span class="nt">&quot;format_preservation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;@masked.com&quot;</span>
+            <span class="p">}</span>
 
+        <span class="p">}</span>
     <span class="p">}</span>
-<span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-<h3 id="sample-response">Sample response</h3>
+<p><code>Response 200 OK</code></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;plain&quot;</span><span class="p">:</span> <span class="s2">&quot;test@example.com&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;masked_value&quot;</span><span class="p">:</span> <span class="s2">&quot;v59ch40i1el3p25xrchz@masked.com&quot;</span>
-<span class="p">}</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="p">{</span>
+        <span class="nt">&quot;plain&quot;</span><span class="p">:</span> <span class="s2">&quot;test@example.com&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;masked_value&quot;</span><span class="p">:</span> <span class="s2">&quot;idkeaotbrub346ycbmpo@masked.com&quot;</span>
+    <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
+<p>The email has been replaced with a random string of 20 characters, while still preserving that the value is an email.</p>
+<p>See <a href="http://0.0.0.0:8080/docs#/Masking/mask_value_api_v1_masking_mask_put">Masking values API docs</a> on how to use fidesops to as a masking service .</p>
+<h2 id="supported-masking-strategies">Supported Masking Strategies</h2>
+<h3 id="supported-by-fidesops-policies">Supported by fidesops policies</h3>
+<ul>
+<li><code>NullMaskingStrategy</code>: Masks the input value with a null value.</li>
+<li>... More strategies coming soon</li>
+</ul>
+<h3 id="supported-by-masking-service-only">Supported by masking service only</h3>
+<ul>
+<li><code>StringRewriteMaskingStrategy</code>: Masks the input value with a default string value</li>
+<li><code>HashMaskingStrategy</code>: Masks the input value by returning a hashed version of the input value</li>
+<li><code>RandomStringRewriteMaskingStrategy</code>: Masks the input value with a random string of a specified length</li>
+<li><code>AesEncryptionMaskingStrategy</code>: Masks by encrypting the value using AES</li>
+<li><code>HmacMaskingStrategy</code>: Masks the input value by using the HMAC algorithm along with a hashed version of the data and a secret key</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<p>Only null value masking is currently supported by fidesops policies, but support for other strategies is coming.
+Currently, erasure requests will replace customer data with null values.</p>
+<p>In the future, to configure a specific masking strategy to be used for a Policy, you will create an <code>erasure</code> rule
+that captures that strategy for the Policy.</p>
+<p>Issue a PUT request to <code>/policy/policy_key/rule</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="p">[{</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Global erasure rule&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;action_type&quot;</span><span class="p">:</span> <span class="s2">&quot;erasure&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;string_rewrite_rule&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;masking_strategy&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;strategy&quot;</span><span class="p">:</span> <span class="s2">&quot;random_string_rewrite&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;configuration&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;length&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+                <span class="nt">&quot;format_preservation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;@masked.com&quot;</span>
+                <span class="p">}</span>   
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}]</span>
+</code></pre></div>
+</td></tr></table>
+<p>See the <a href="../policies/">Policy guide</a> for more detailed instructions on creating Policies and Rules.</p>
 <h2 id="getting-masking-options">Getting masking options</h2>
 <p>Issue a GET request to <a href="http://0.0.0.0:8080/docs#/Masking/list_masking_strategies_api_v1_masking_strategy_get"><code>/api/v1/masking/strategy</code></a> to preview the different masking
 strategies available, along with their configuration options. </p>
 <h2 id="extensibility">Extensibility</h2>
-<p>In Fidesops, masking strategies are all built on top of an abstract base class - <code>MaskingStrategy</code>. 
+<p>In fidesops, masking strategies are all built on top of an abstract base class - <code>MaskingStrategy</code>. 
 MaskingStrategy has three methods - <code>mask</code>, <code>get_configuration_model</code> and <code>get_description</code>. For more detail on these 
 methods, visit the class in the fidesops repository. For now, we will focus on the implementation of
 <code>RandomStringRewriteMaskingStrategy</code> below:</p>
