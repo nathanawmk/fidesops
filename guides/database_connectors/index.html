@@ -468,6 +468,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sample-request-for-a-mysql-database" class="md-nav__link">
+    Sample request for a MySQL database:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#note" class="md-nav__link">
     Note:
   </a>
@@ -504,6 +511,13 @@
           <li class="md-nav__item">
   <a href="#sample-request-to-specify-the-mongodb-url-directly-and-bypass-verification" class="md-nav__link">
     Sample request to specify the MongoDB URL directly and bypass verification:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-request-to-add-mysql-secrets" class="md-nav__link">
+    Sample request to add MySQL secrets:
   </a>
   
 </li>
@@ -953,6 +967,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sample-request-for-a-mysql-database" class="md-nav__link">
+    Sample request for a MySQL database:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#note" class="md-nav__link">
     Note:
   </a>
@@ -989,6 +1010,13 @@
           <li class="md-nav__item">
   <a href="#sample-request-to-specify-the-mongodb-url-directly-and-bypass-verification" class="md-nav__link">
     Sample request to specify the MongoDB URL directly and bypass verification:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-request-to-add-mysql-secrets" class="md-nav__link">
+    Sample request to add MySQL secrets:
   </a>
   
 </li>
@@ -1060,6 +1088,7 @@ categories.  We store the details to make that connection in a <code>ConnectionC
 <ul>
 <li>PostgreSQL</li>
 <li>MongoDB</li>
+<li>MySQL</li>
 </ul>
 <h2 id="configuring-a-connection">Configuring a connection</h2>
 <p>You'll first issue a request to create a <code>ConnectionConfig</code> object, which stores basic connection information. In 
@@ -1099,6 +1128,25 @@ a separate request, you'll supply and test the connection secrets (like your dat
         <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;My Mongo DB&quot;</span><span class="p">,</span>
         <span class="nt">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;app-mongo-db&quot;</span><span class="p">,</span>
         <span class="nt">&quot;connection_type&quot;</span><span class="p">:</span> <span class="s2">&quot;mongodb&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;access&quot;</span><span class="p">:</span> <span class="s2">&quot;write&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+</td></tr></table>
+<h4 id="sample-request-for-a-mysql-database">Sample request for a MySQL database:</h4>
+<p><code>PUT api/v1/connection</code></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">[</span>
+    <span class="p">{</span> 
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;My MySQL DB&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;app-mysql-db&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;connection_type&quot;</span><span class="p">:</span> <span class="s2">&quot;mysql&quot;</span><span class="p">,</span>
         <span class="nt">&quot;access&quot;</span><span class="p">:</span> <span class="s2">&quot;write&quot;</span>
     <span class="p">}</span>
 <span class="p">]</span>
@@ -1147,6 +1195,23 @@ if the connection succeeded or failed.  You can optionally supply the entire <co
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table></p>
+<h4 id="sample-request-to-add-mysql-secrets">Sample request to add MySQL secrets:</h4>
+<p><code>PUT /api/v1/connection/app-mysql-db/secret</code></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="p">{</span>
+       <span class="nt">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;mysql_example&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="mi">3306</span><span class="p">,</span>
+       <span class="nt">&quot;dbname&quot;</span><span class="p">:</span> <span class="s2">&quot;mysql_example&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;mysql_user&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;mysql_pw&quot;</span>
+    <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
 <h3 id="testing-your-connection">Testing your connection</h3>
 <p>If at any time, you want to verify that your connection secrets are valid, simply issue a GET request 
 to the connection test endpoint.</p>
