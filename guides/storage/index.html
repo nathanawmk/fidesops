@@ -880,17 +880,17 @@
 </ul>
 <p>Take me directly to <a href="http://0.0.0.0:8080/docs#/Storage">api docs</a> (you'll need to <code>make server</code> first)</p>
 <h2 id="overview">Overview</h2>
-<p>SAR requests will produce a data package upon completion. This data will need to be uploaded to a storage destination (e.g. an S3 bucket). </p>
-<p>Fidesops never stores privacy request results locally, so you’ll need to configure at least one storage destination if you wish to process SAR requests.</p>
+<p>Access requests requests will produce a data package upon completion. This data will need to be uploaded to a storage destination (e.g. an S3 bucket). </p>
+<p>Fidesops never stores privacy request results locally, so you’ll need to configure at least one storage destination if you wish to process Access requests.</p>
 <p>Storage destinations are configured on Rules. </p>
 <p><img alt="Storage Destinations" src="../../img/storage_destinations.png" title="Storage Destinations" /></p>
 <p>Multiple destinations can be configured, each of which might be used by different rules. Read more about configuring rules <a href="">here</a> # todo: add link</p>
 <p>Each unique destination is configured using a "StorageConfig", which you can create and manage via the API.</p>
 <p>To configure a StorageConfig, you'll first need to choose a storage destination type. Fidesops currently supports the following types:</p>
 <ul>
-<li><strong>S3</strong> - S3 upload is straightforward, in which files are uploaded in an S3 bucket of your choosing upon completion of SAR requests. Use S3 if you simply need a place to store those files.</li>
+<li><strong>S3</strong> - S3 upload is straightforward, in which files are uploaded in an S3 bucket of your choosing upon completion of Access requests. Use S3 if you simply need a place to store those files.</li>
 <li><strong>OneTrust</strong> - A OneTrust storage destination should be configured if you wish to use Fidesops to process requests from an existing OneTrust integration. Read more about how our OneTrust integration works <a href="../onetrust/">here</a></li>
-<li><strong>local</strong> - This saves upload packages locally, generating a <code>fides_uploads</code> directory at the root of this project. This destination type should be used only for testing purposes, never to process real-world SAR requests.</li>
+<li><strong>local</strong> - This saves upload packages locally, generating a <code>fides_uploads</code> directory at the root of this project. This destination type should be used only for testing purposes, never to process real-world Access requests.</li>
 </ul>
 <h2 id="configuration">Configuration</h2>
 <p>Let's get started. To create a new StorageConfig, use the following endpoint (<a href="http://0.0.0.0:8080/docs#/Storage/put_config_api_v1_storage_config_put">api docs here</a>):</p>
@@ -949,7 +949,7 @@ Params:</p>
 </ul>
 <p>Additional params needed for OneTrust:</p>
 <ul>
-<li><code>service_name</code>: Name of your service / company. This informs OneTrust from where the data obtained from a given SAR request originated. </li>
+<li><code>service_name</code>: Name of your service / company. This informs OneTrust from where the data obtained from a given Access request originated. </li>
 <li><code>onetrust_polling_hr</code>: Hour, in UTC timezone, at which to poll OneTrust for new requests. Accepts an int from 0-23, where 0 is midnight. E.g. <code>7</code> is 7am UTC.</li>
 <li><code>onetrust_polling_day_of_week</code>: Day on which to poll OneTrust for new requests. Accepts an int from 0-6 where 0 is Sunday. E.g. <code>1</code> is Monday.</li>
 </ul>

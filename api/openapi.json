@@ -1960,7 +1960,7 @@
           "Storage"
         ],
         "summary": "Upload Data",
-        "description": "Uploads data from a SAR to specified storage destination.\nReturns location of data.",
+        "description": "Uploads data from an access request to specified storage destination.\nReturns location of data.",
         "operationId": "upload_data_api_v1_storage__request_id__post",
         "parameters": [
           {
