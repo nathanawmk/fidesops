@@ -604,17 +604,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    Getting Started
+  <a href="#getting-started-with-fidesops-in-docker" class="md-nav__link">
+    Getting Started with Fidesops in Docker
   </a>
   
-    <nav class="md-nav" aria-label="Getting Started">
+    <nav class="md-nav" aria-label="Getting Started with Fidesops in Docker">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#clone-fides" class="md-nav__link">
-    Clone Fides
+  <a href="#system-requirements" class="md-nav__link">
+    System Requirements
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-make-commands" class="md-nav__link">
+    Available make commands
+  </a>
+  
+    <nav class="md-nav" aria-label="Available make commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    Issues
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -828,17 +848,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    Getting Started
+  <a href="#getting-started-with-fidesops-in-docker" class="md-nav__link">
+    Getting Started with Fidesops in Docker
   </a>
   
-    <nav class="md-nav" aria-label="Getting Started">
+    <nav class="md-nav" aria-label="Getting Started with Fidesops in Docker">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#clone-fides" class="md-nav__link">
-    Clone Fides
+  <a href="#system-requirements" class="md-nav__link">
+    System Requirements
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-make-commands" class="md-nav__link">
+    Available make commands
+  </a>
+  
+    <nav class="md-nav" aria-label="Available make commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    Issues
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -883,16 +923,41 @@
                 
                 <h1 id="development-overview">Development Overview</h1>
 <hr />
-<p>Thanks for contributing to Fides! This section of the docs is designed to help you become familiar with how we work, the standards we apply, and how to ensure your contribution is successful.</p>
-<p>If you're stuck, don't be shy about asking for help <a href="https://github.com/ethyca/solon/issues">on GitHub</a>.</p>
-<h2 id="getting-started">Getting Started</h2>
-<h3 id="clone-fides">Clone Fides</h3>
-<p>To clone Fides for development, run <code>git clone https://github.com/ethyca/solon</code>.</p>
-<p>Once that is complete, there are a few different ways to spin up the project and get coding!</p>
+<p>Thanks for contributing to Fidesops! This section of the docs is designed to help you become familiar with how we work, the standards we apply, and how to ensure your contribution is successful.</p>
+<p>If you're stuck, don't be shy about asking for help <a href="https://github.com/ethyca/fidesops/issues">on GitHub</a>.</p>
+<h2 id="getting-started-with-fidesops-in-docker">Getting Started with Fidesops in Docker</h2>
+<p>The recommended way to run Fidesops is to launch it with Docker and Docker Compose. <code>Make</code> commands wrap docker-compose 
+commands to give you different functionality.</p>
+<h3 id="system-requirements">System Requirements</h3>
+<ol>
+<li>Install Docker: https://docs.docker.com/desktop/#download-and-install</li>
+<li>Install <code>make</code> locally (see Make on Homebrew (Mac), Make for Windows, or your preferred installation) </li>
+<li><code>brew install make</code></li>
+<li>Clone fidesops <code>git clone https://github.com/ethyca/fidesops.git</code></li>
+<li><code>cd fidesops</code></li>
+</ol>
+<h3 id="available-make-commands">Available make commands</h3>
 <ul>
-<li><strong>Recommended</strong>: If you're using VS Code, the recommended way to work on Fides is by leveraging the Dev Container feature. The repo has a <code>.devcontainer/devcontainer.json</code> file already included that will set up a complete environment in VS Code, including the suggested VS Code extensions and settings.</li>
-<li>If you're using an editor besides VS Code, then the next best way to work on Fides is by utilizing the <code>Makefile</code> commands. See the guide <a href="https://github.com/ethyca/solon/blob/main/docs/solon/docs/getting_started/docker.md">here</a> for more information on getting setting up via the <code>Makefile</code>.</li>
+<li><code>make server</code> - this spins up the Fastapi server and supporting resources (a Postgres database and a Redis cache), which you can visit at <code>http://0.0.0.0:8080</code>. Check out the docs at <code>http://0.0.0.0:8000/fidesops/</code></li>
+<li><code>make integration-env</code> - spins up everything in make server, plus additional postgres, mongo, and mysql databases for you to execute privacy requests against.<ul>
+<li>Try this out locally with our <a href="../../postman/Fidesops.postman_collection.json">Fidesops Postman Collection</a></li>
 </ul>
+</li>
+<li><code>make black</code>, <code>make mypy</code>, and <code>make pylint</code> - auto-formats code</li>
+<li><code>make check-all</code> - runs the CI checks locally and verifies that your code meets project standards</li>
+<li><code>make server-shell</code>-  opens a shell on the Docker container, from here you can run useful commands like:</li>
+<li><code>ipython</code> - open a Python shell</li>
+<li><code>make pytest</code> - runs all unit tests except those that talk to integration databases</li>
+<li><code>make pytest-integration-access</code> - runs access integration tests</li>
+<li><code>make reset-db</code> - tears down the Fideops postgres db, then recreates and re-runs migrations.</li>
+<li><code>make quickstart</code> - runs a quick, five second quickstart that talks to the Fidesops API to execute privacy requests</li>
+<li><code>make check-migrations</code> - verifies there are no un-run migrations </li>
+<li><code>make docs-serve</code> - spins up just the docs</li>
+</ul>
+<p>see <a href="../../../../Makefile">Makefile</a> for more options. </p>
+<h4 id="issues">Issues</h4>
+<p>When running <code>make server</code>, if you get a <code>importlib.metadata.PackageNotFoundError: fidesops</code>, do <code>make server-shell</code>,
+and then run <code>pip install -e .</code>. Verify Fidesops is installed with <code>pip list</code>. </p>
 <h3 id="write-your-code">Write your code</h3>
 <p>We have no doubt you can write amazing code! However, we want to help you ensure your code plays nicely with the rest of the Fides ecosystem. Many projects describe code style and documentation as a suggestion; in Fides it's a CI-checked requirement.</p>
 <ul>
@@ -902,9 +967,9 @@
 <li>To learn what format your PR should follow, make sure to follow the <a href="../pull_requests/">pull request guidelines</a>.</li>
 </ul>
 <h3 id="submit-your-code">Submit your code</h3>
-<p>In order to submit code to Fides, please:</p>
+<p>In order to submit code to Fidesops, please:</p>
 <ul>
-<li><a href="https://help.github.com/en/articles/fork-a-repo">Fork the Fides repository</a></li>
+<li><a href="https://help.github.com/en/articles/fork-a-repo">Fork the Fidesops repository</a></li>
 <li><a href="https://help.github.com/en/desktop/contributing-to-projects/creating-a-branch-for-your-work">Create a new branch</a> on your fork</li>
 <li><a href="https://help.github.com/en/articles/creating-a-pull-request-from-a-fork">Open a Pull Request</a> once your work is ready for review</li>
 <li>Once automated tests have passed, a maintainer will review your PR and provide feedback on any changes it requires to be approved. Once approved, your PR will be merged into Fides.</li>
