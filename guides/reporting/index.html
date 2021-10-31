@@ -11,7 +11,7 @@
       
         <link rel="canonical" href="https://ethyca.github.io/fidesops/guides/reporting/">
       
-      <link rel="icon" href="../../img/favicon.png">
+      <link rel="icon" href="../../img/favicon.ico">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.2.5">
     
     
@@ -542,15 +542,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#privacy-request-log-details" class="md-nav__link">
-    Privacy Request Log Details
+  <a href="#view-all-privacy-request-logs" class="md-nav__link">
+    View All Privacy Request Logs
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#viewing-all-the-logs" class="md-nav__link">
-    Viewing all the logs
+  <a href="#view-individual-privacy-request-log-details" class="md-nav__link">
+    View Individual Privacy Request Log Details
   </a>
   
 </li>
@@ -869,15 +869,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#privacy-request-log-details" class="md-nav__link">
-    Privacy Request Log Details
+  <a href="#view-all-privacy-request-logs" class="md-nav__link">
+    View All Privacy Request Logs
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#viewing-all-the-logs" class="md-nav__link">
-    Viewing all the logs
+  <a href="#view-individual-privacy-request-log-details" class="md-nav__link">
+    View Individual Privacy Request Log Details
   </a>
   
 </li>
@@ -901,13 +901,13 @@
 <li>How to check the high-level status of your privacy requests</li>
 <li>How to get more detailed execution logs of queries that were run as part of your privacy requests. </li>
 </ul>
-<p>Take me directly to <a href="http://0.0.0.0:8080/docs#/Privacy%20Requests/get_request_status_api_v1_privacy_request_get">api docs</a> </p>
+<p>Take me directly to <a href="/api#operations-Privacy_Requests-get_request_status_api_v1_privacy_request_get">API docs</a>.</p>
 <h2 id="overview">Overview</h2>
 <p>The reporting feature allows you to fetch information about privacy requests. You can opt for high-level or more detailed 
 information about the individual queries executed internally.</p>
 <h2 id="high-level-status">High-level Status</h2>
 <p>This request displays concise, high-level information for all your PrivacyRequests including their status and related timestamps.</p>
-<p>Check out the <a href="/docs#/PrivacyRequest/get_request_status_api_v1_privacy_requests_get">API docs here</a>.</p>
+<p>Check out the <a href="/api#operations-Privacy_Requests-get_request_status_api_v1_privacy_request_get">API docs here</a>.</p>
 <p><code>GET api/v1/privacy-request</code></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
@@ -958,7 +958,11 @@ information about the individual queries executed internally.</p>
 <li>errored_lt</li>
 <li>errored_gt</li>
 </ul>
-<h2 id="privacy-request-log-details">Privacy Request Log Details</h2>
+<h2 id="view-all-privacy-request-logs">View All Privacy Request Logs</h2>
+<p>To view all the execution logs for a Privacy Request, visit <code>/api/v1/privacy-request/{privacy_request_id}/logs</code>.
+Embedded logs in the previous endpoints are truncated at 50 logs.</p>
+<p>Check out the <a href="/api#operations-Privacy_Requests-get_request_status_logs_api_v1_privacy_request__privacy_request_id__log_get">API docs here</a>.</p>
+<h2 id="view-individual-privacy-request-log-details">View Individual Privacy Request Log Details</h2>
 <p>Use the <code>verbose</code> query param to see more details about individual queries run as part of the Privacy Request along
 with individual statuses. </p>
 <p><code>verbose</code> will embed a “results” key in the response, with execution logs grouped by dataset name.  In the example below,
@@ -1103,10 +1107,6 @@ list of logs, visit the execution logs endpoint separately.</p>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-<h2 id="viewing-all-the-logs">Viewing all the logs</h2>
-<p>To view all the execution logs for a Privacy Request, visit <code>/api/v1/privacy-request/{privacy_request_id}/logs</code>.
-Embedded logs in the previous endpoints are truncated at 50 logs.</p>
-<p>Check out the <a href="/docs#/PrivacyRequest/get_request_status_logs_api_v1_privacy_requests__privacy_request_id__logs_get">API docs here</a>.</p>
                 
               
               

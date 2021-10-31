@@ -11,7 +11,7 @@
       
         <link rel="canonical" href="https://ethyca.github.io/fidesops/guides/storage/">
       
-      <link rel="icon" href="../../img/favicon.png">
+      <link rel="icon" href="../../img/favicon.ico">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.2.5">
     
     
@@ -878,22 +878,22 @@
 <li>How to test your storage destinations</li>
 <li>How to extend this module to create a new, custom storage destination type</li>
 </ul>
-<p>Take me directly to <a href="http://0.0.0.0:8080/docs#/Storage">api docs</a> (you'll need to <code>make server</code> first)</p>
+<p>Take me directly to <a href="/api#operations-Storage-upload_data_api_v1_storage__request_id__post/">API docs</a> (you'll need to <code>make server</code> first)</p>
 <h2 id="overview">Overview</h2>
 <p>Access requests requests will produce a data package upon completion. This data will need to be uploaded to a storage destination (e.g. an S3 bucket). </p>
 <p>Fidesops never stores privacy request results locally, so you’ll need to configure at least one storage destination if you wish to process Access requests.</p>
 <p>Storage destinations are configured on Rules. </p>
 <p><img alt="Storage Destinations" src="../../img/storage_destinations.png" title="Storage Destinations" /></p>
-<p>Multiple destinations can be configured, each of which might be used by different rules. Read more about configuring rules <a href="">here</a> # todo: add link</p>
+<p>Multiple destinations can be configured, each of which might be used by different rules. Read more about configuring rules <a href="../policies/">here</a></p>
 <p>Each unique destination is configured using a "StorageConfig", which you can create and manage via the API.</p>
 <p>To configure a StorageConfig, you'll first need to choose a storage destination type. Fidesops currently supports the following types:</p>
 <ul>
-<li><strong>S3</strong> - S3 upload is straightforward, in which files are uploaded in an S3 bucket of your choosing upon completion of Access requests. Use S3 if you simply need a place to store those files.</li>
+<li><strong>local</strong> - This saves upload packages locally, generating a <code>fides_uploads</code> directory at the root of this project. This destination type should be used only for testing purposes, never to process real-world access requests.</li>
+<li><strong>S3</strong> - S3 upload is straightforward, in which files are uploaded in an S3 bucket of your choosing upon completion of access requests. Use S3 if you simply need a place to store those files.</li>
 <li><strong>OneTrust</strong> - A OneTrust storage destination should be configured if you wish to use Fidesops to process requests from an existing OneTrust integration. Read more about how our OneTrust integration works <a href="../onetrust/">here</a></li>
-<li><strong>local</strong> - This saves upload packages locally, generating a <code>fides_uploads</code> directory at the root of this project. This destination type should be used only for testing purposes, never to process real-world Access requests.</li>
 </ul>
 <h2 id="configuration">Configuration</h2>
-<p>Let's get started. To create a new StorageConfig, use the following endpoint (<a href="http://0.0.0.0:8080/docs#/Storage/put_config_api_v1_storage_config_put">api docs here</a>):</p>
+<p>Let's get started. To create a new StorageConfig, use the following endpoint (<a href="/api#operations-Storage-put_config_api_v1_storage_config_put/">API docs here</a>):</p>
 <p><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -949,7 +949,7 @@ Params:</p>
 </ul>
 <p>Additional params needed for OneTrust:</p>
 <ul>
-<li><code>service_name</code>: Name of your service / company. This informs OneTrust from where the data obtained from a given Access request originated. </li>
+<li><code>service_name</code>: Name of your service / company. This informs OneTrust from where the data obtained from a given access request originated.</li>
 <li><code>onetrust_polling_hr</code>: Hour, in UTC timezone, at which to poll OneTrust for new requests. Accepts an int from 0-23, where 0 is midnight. E.g. <code>7</code> is 7am UTC.</li>
 <li><code>onetrust_polling_day_of_week</code>: Day on which to poll OneTrust for new requests. Accepts an int from 0-6 where 0 is Sunday. E.g. <code>1</code> is Monday.</li>
 </ul>
@@ -997,7 +997,7 @@ Params:</p>
 <h2 id="authentication">Authentication</h2>
 <p>Next, you'll need to authenticate secrets with the specific storage destination.</p>
 <p>Authentication is not needed for the <code>local</code> destination type.</p>
-<p>Use the <code>storage_key</code> obtained from above in the following endpoint (<a href="http://0.0.0.0:8080/docs#/Storage/put_config_secrets_api_v1_storage_config__config_key__secret_put">api docs here</a>): </p>
+<p>Use the <code>storage_key</code> obtained from above in the following endpoint (<a href="/api#operations-Storage-put_config_secrets_api_v1_storage_config__config_key__secret_put">API docs here</a>): </p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1034,7 +1034,7 @@ Params:</p>
 <h2 id="testing">Testing</h2>
 <p>To test that your storage destination works correctly, you may hit the upload endpoint directly, where <code>request_id</code> in the path is an arbitrary string.</p>
 <p>Keep in mind that OneTrust destinations will need to be tested end-to-end, using the OneTrust interface to approve a test privacy request. </p>
-<p>To upload data to a storage destination of choice (<a href="http://0.0.0.0:8080/docs#/Storage/upload_data_api_v1_storage__request_id__post">api docs here</a>):</p>
+<p>To upload data to a storage destination of choice (<a href="/api#operations-Storage-upload_data_api_v1_storage__request_id__post/">api docs here</a>):</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span>
@@ -1056,7 +1056,7 @@ Params:</p>
 <li><code>data</code>: dict of arbitrary data you wish to upload to storage destination.</li>
 </ul>
 <h2 id="extensibility">Extensibility</h2>
-<p>Should you wish to extend Fidesops to include additional storage destination types, here's what you'll need to do:</p>
+<p>Need a different storage destination? Fidesops can be extended to support additional storage destinations by:</p>
 <ol>
 <li>Add destination-specific enums in <code>src/fidesops/schemas/storage/storage.py</code></li>
 <li>Implement an authenticator in <code>src/fidesops/service/storage/storage_authenticator_service.py</code></li>

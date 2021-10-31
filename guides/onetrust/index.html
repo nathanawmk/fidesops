@@ -11,7 +11,7 @@
       
         <link rel="canonical" href="https://ethyca.github.io/fidesops/guides/onetrust/">
       
-      <link rel="icon" href="../../img/favicon.png">
+      <link rel="icon" href="../../img/favicon.ico">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.2.5">
     
     
@@ -903,7 +903,7 @@
 <li>How to configure OneTrust request intake and storage</li>
 <li>How to test the OneTrust integration</li>
 </ul>
-<p>Api docs for OneTrust are part of the <a href="http://0.0.0.0:8080/docs#/Storage">storage</a> module (you'll need to <code>make server</code> first).</p>
+<p>API docs for OneTrust are part of the <a href="/api#operations-tag-Storage">storage</a> module (you'll need to <code>make server</code> first).</p>
 <h2 id="overview">Overview</h2>
 <p>OneTrust is a DSAR automation provider that provides an interface to manage privacy requests.</p>
 <p>Fidesops handles the integration to OneTrust to fulfill Data Subject Requests and returns the data package back to OneTrust.</p>
@@ -922,13 +922,15 @@
 <p><img alt="OneTrust Request Flow" src="../../img/onetrust_request_flow.png" title="OneTrust Request Flow" /></p>
 <h2 id="configuration">Configuration</h2>
 <h3 id="fidesops">Fidesops</h3>
-<p>OneTrust request intake is configured as part of the <code>StorageConfig</code> in the storage module. </p>
-<p>You'll need to add a <code>StorageConfig</code> that includes a <code>onetrust</code> destination type, then authenticate with OneTrust.</p>
-<p>As part of this configuration, you'll need to decide what day of the week and hour of the day you wish to retrieve requests from OneTrust.</p>
+<p>OneTrust request intake is configured as part of the <code>StorageConfig</code> in the storage module. To configure Fidesops to connect to OneTrust:</p>
+<ol>
+<li>Add Destination: Add a <code>StorageConfig</code> that includes a <code>onetrust</code> destination type.</li>
+<li>Authenticate: Use appropriate credentials to authenticate with OneTrust.</li>
+<li>Determine polling interval: Decide what day of the week and hour of the day you wish to retrieve requests from OneTrust.</li>
+</ol>
 <p>Read more about how to do this <a href="../storage/">here</a></p>
 <h3 id="onetrust">OneTrust</h3>
-<p>When the Fidesops scheduled task runs, it looks for subtasks with a name of "fides task". </p>
-<p>So, you'll need to be sure tasks you wish to pass through the Fides ecosystem are correctly labeled in the OneTrust interface.</p>
+<p>When the Fidesops scheduled task runs, it looks for subtasks with a exact string name of "fides task".  So, you'll need to be sure tasks you wish to pass through the Fides ecosystem are correctly labeled in the OneTrust interface.</p>
 <h2 id="testing">Testing</h2>
 <p>To test the OneTrust integration works correctly, you'll need to do the following:</p>
 <ol>
