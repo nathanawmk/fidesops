@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-to-preview-query-execution" class="md-skip">
+        <a href="#query-execution" class="md-skip">
           Skip to content
         </a>
       
@@ -424,9 +424,60 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Preview Query Execution
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Preview Query Execution
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#graphs-and-traversals" class="md-nav__link">
+    Graphs and Traversals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-example-graph" class="md-nav__link">
+    An example graph
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-fidesops-execute-queries" class="md-nav__link">
+    How does Fidesops execute queries?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes-about-dataset-traversals" class="md-nav__link">
+    Notes about Dataset traversals
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -757,6 +808,42 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#graphs-and-traversals" class="md-nav__link">
+    Graphs and Traversals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-example-graph" class="md-nav__link">
+    An example graph
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-fidesops-execute-queries" class="md-nav__link">
+    How does Fidesops execute queries?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes-about-dataset-traversals" class="md-nav__link">
+    Notes about Dataset traversals
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -768,13 +855,234 @@
               
                 
                 
-                <h1 id="how-to-preview-query-execution">How-To: Preview Query Execution</h1>
-<p>NOTE: The outline below is a suggestion, adapt as needed. The goal is to make it clear (1) what this feature is for, and (2) how an engineer can use it.</p>
+                <h1 id="query-execution">Query Execution</h1>
+<h2 id="graphs-and-traversals">Graphs and Traversals</h2>
+<p>Fidesops uses the datasets you provide to generate a <em>graph</em> of the resources. Based on the identity data you provide, Fidesops then generates a specific <em>traversal</em>, which is the order of steps that will be taken to fulfill the specific request. If no traversal can be generated that reaches all declared collections, Fidesops will generate an error.</p>
+<p>The graph supports both directed and non-directed edges using the optional <code>direction</code> parameter on the relation (non-directional edges may be traversed in either direction). You can always preview the queries that will be generated or manually control the order of operations by making relations explicitly directional and with the <code>after</code> dataset and collection parameters. </p>
+<h2 id="an-example-graph">An example graph</h2>
+<p>Let's look at a slightly larger example. In this example there are 3 separate databases, a mysql database that stores users and their comments, a postgres DB that stores purchase information, and a mongoDB that stores user accounts. Each of them may have related data that we'd like to retrieve.</p>
+<p><img alt="Example tables" src="../../img/traversal_tables.png" title="Example tables" /></p>
+<p>The (abbreviated) specification of these datasets looks like:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">dataset</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">fides_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mongo_1</span>
+    <span class="nt">collections</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">users</span>
+        <span class="nt">fields</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">_id</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+              <span class="nt">primary_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">user_name</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+              <span class="nt">identity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">username</span>
+          <span class=" -Error"> </span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">full_name</span>
+
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">accounts</span>
+        <span class="nt">fields</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">_id</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+              <span class="nt">primary_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">name</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+                <span class="nt">references</span><span class="p">:</span>
+                    <span class="p p-Indicator">-</span> <span class="nt">dataset</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mongo_1</span>
+                      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">users.full_name</span>
+                      <span class="nt">direction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">from</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">comments</span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">dataset</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">fides_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql_1</span>
+    <span class="nt">collections</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">users</span>
+        <span class="nt">fields</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">id</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+              <span class="nt">primary_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+              <span class="nt">references</span><span class="p">:</span>
+                <span class="p p-Indicator">-</span> <span class="nt">dataset</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres_1</span>
+                  <span class="nt">field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">users.id</span>
+                  <span class="nt">direction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">from</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">internal_id</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">comment</span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">dataset</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">fides_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres_1</span>
+    <span class="nt">collections</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">purchase_items</span>
+        <span class="nt">fields</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">id</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+              <span class="nt">primary_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">purchase_id</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+              <span class="nt">references</span><span class="p">:</span>
+                <span class="p p-Indicator">-</span> <span class="nt">dataset</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres_1</span>
+                  <span class="nt">field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">purchases.id</span>
+                  <span class="nt">direction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">from</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amount</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rating</span>
+
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">purchases</span>
+        <span class="nt">fields</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">id</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+              <span class="nt">primary_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">user_id</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+              <span class="nt">references</span><span class="p">:</span>
+                <span class="p p-Indicator">-</span> <span class="nt">dataset</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres_1</span>
+                  <span class="nt">field</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">users.id</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">amount</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">users</span>
+        <span class="nt">fields</span><span class="p">:</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">id</span>
+            <span class="nt">fidesops_meta</span><span class="p">:</span>
+              <span class="nt">primary_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">email</span>
+              <span class="l l-Scalar l-Scalar-Plain">fidesops_meta</span><span class="p p-Indicator">:</span>
+                <span class="nt">identity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">email</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">address_id</span>
+</code></pre></div>
+</td></tr></table>
+<p>Typically we'll trigger a retrieval with one or at most a few pieces of user provided data, say, an email and a user_id. What we'll need to do is </p>
+<ol>
+<li>Identify which collections have data we can search with using a piece of provided user data</li>
+<li>Find those related records</li>
+<li>Use that data to find any connected data</li>
+<li>Continue until we've found all related data.</li>
+</ol>
+<p>For the first step, we use the concept of an <code>identity</code>. In the Fidesops dataset specification, you may notice that any field may be marked with an <code>identity</code> notation:
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">collection</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">foo</span>
+    <span class="nt">fields</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bar</span>
+        <span class="l l-Scalar l-Scalar-Plain">fidesop_meta</span><span class="p p-Indicator">:</span>
+           <span class="nt">identity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">email</span> 
+</code></pre></div>
+</td></tr></table></p>
+<p>What this means is that we will <em>start</em> the data retrieval process with provided data that looks like 
+<code>{"email": "user@example.com", "username": "someone"}</code> by looking for any values in the collection <code>users</code> where <code>email == user@example.com</code>.  Note that the names of the provided starter data do not need to match the field names we're going to use this data to search. Also note that in this case, since we're providing two pieces of data,  we can also choose to start a search using the username provided value. In the above diagram, this means we have enough data to search in both <code>postgres_1.users.email</code> and <code>mongo_1.users.user_name</code>. </p>
+<h2 id="how-does-fidesops-execute-queries">How does Fidesops execute queries?</h2>
+<p>() The next step is to follow any links provided in field relationship information. In the (abbreviated) dataset declarations below, you can see that, for example, since we know that <code>mongo_1.accounts</code> data contains data related to <code>mongo_1.users</code>, we can retrieve data from <code>mongo_1.accounts</code> by running queries in sequence. We will generate and run queries that are appropriate to the type of datastore specified. Currently, MongoDB, PostgreSQL, and MySQL are supported, although more are planned.</p>
+<p>This will generate a set of queries that look like:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="o">#</span> <span class="n">mongo_1</span>
+<span class="mi">1</span><span class="p">.</span> <span class="n">db</span><span class="p">.</span><span class="n">users</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="err">{</span><span class="ss">&quot;user_name&quot;</span><span class="p">:</span><span class="ss">&quot;someone&quot;</span><span class="err">}</span><span class="p">,</span><span class="err">{</span><span class="ss">&quot;_id&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="ss">&quot;full_name&quot;</span><span class="p">:</span><span class="mi">1</span><span class="err">}</span><span class="p">)</span> 
+<span class="mi">2</span><span class="p">.</span> <span class="n">db</span><span class="p">.</span><span class="n">accounts</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="err">{</span><span class="ss">&quot;name&quot;</span><span class="p">:</span><span class="err">{</span><span class="ss">&quot;$in&quot;</span><span class="p">:[</span>  <span class="o">&lt;</span><span class="n">full_name</span> <span class="n">value</span> <span class="k">from</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="p">]</span><span class="err">}}</span><span class="p">,</span><span class="err">{</span><span class="ss">&quot;_id&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="ss">&quot;comments&quot;</span><span class="p">:</span><span class="mi">1</span><span class="err">}</span><span class="p">)</span>
+
+<span class="o">#</span> <span class="n">postgres_1</span>
+<span class="mi">3</span><span class="p">.</span> <span class="k">select</span> <span class="n">id</span><span class="p">,</span> <span class="n">address_id</span> <span class="k">from</span> <span class="n">users</span> <span class="k">where</span> <span class="n">email</span> <span class="o">=</span> <span class="s1">&#39;user@example.com&#39;</span><span class="p">;</span>
+<span class="mi">4</span><span class="p">.</span> <span class="k">select</span> <span class="n">id</span><span class="p">,</span> <span class="n">amount</span> <span class="k">from</span> <span class="n">purchases</span> <span class="k">where</span> <span class="n">user_id</span> <span class="k">in</span> <span class="p">[</span> <span class="o">&lt;</span><span class="n">id</span> <span class="k">values</span> <span class="k">from</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;</span><span class="p">]</span> 
+<span class="mi">5</span><span class="p">.</span> <span class="k">select</span> <span class="n">id</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">rating</span> <span class="k">from</span> <span class="n">purchase_items</span> <span class="k">where</span> <span class="n">purchase_id</span> <span class="k">in</span> <span class="p">[</span> <span class="o">&lt;</span><span class="n">id</span> <span class="k">values</span> <span class="k">from</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">]</span>
+
+<span class="o">#</span> <span class="n">mysql_1</span>
+<span class="mi">6</span><span class="p">.</span> <span class="k">select</span> <span class="n">internal_id</span><span class="p">,</span> <span class="k">comment</span> <span class="k">from</span> <span class="n">users</span> <span class="k">where</span> <span class="n">id</span> <span class="k">in</span> <span class="p">[</span> <span class="o">&lt;</span><span class="n">id</span> <span class="k">values</span> <span class="k">from</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;</span><span class="p">]</span>
+</code></pre></div>
+</td></tr></table>
+<p>Logically, we are creating a linked graph using the connections you've specified between your collections to retrieve your data. </p>
+<p><img alt="Example graph" src="../../img/traversal_graph.png" title="Example graph" /></p>
+<h2 id="notes-about-dataset-traversals">Notes about Dataset traversals</h2>
 <ul>
-<li>TODO: How does Fidesops generate traversals?</li>
-<li>TODO: How does Fidesops execute queries?</li>
-<li>TODO: How can I preview query execution after configuring my connections &amp; datasets (link to API reference for preview)</li>
-<li>TODO: Link to API reference as needed for more detail</li>
+<li>
+<p>You can define multiple links between collections, which will generate OR queries like <code>SELECT a,b,c from TABLE_1 where name in  (values from TABLE\_2)  OR email in (values from TABLE\_3)</code>. </p>
+</li>
+<li>
+<p>If some collections in your dataset are not theoretically reachable from the relations you've specified, Fidesops will <em>not</em> run queries, but treats this as a configuration error. It is not an error if there are relations specified but there's just no data found to continue querying. In this case Fidesops will just return empty sets of data for collections where nothing was found.</p>
+</li>
+<li>
+<p>Fidesops first uses your datasets and your input data to "solve" the graph of your collections and how it is traversed. If your dataset has multiple identity values, you can create a situation where the query behavior depends on the values you input. In the example above,staring the graph traversal with <code>{"email":"value1", "username":"value2"}</code>  works fine, but starting with  <code>{"email":"value1"}</code> fails, since <code>mongo_1.users</code> is no longer reachable.</p>
+</li>
+<li>
+<p>There is no restriction on links between datasets. As in the example above, it's perfectly fine to query across datasets.</p>
+</li>
 </ul>
                 
               
