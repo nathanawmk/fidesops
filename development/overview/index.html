@@ -969,7 +969,8 @@ commands to give you different functionality.</p>
 <li>Install Docker: https://docs.docker.com/desktop/#download-and-install</li>
 <li>Install <code>make</code> locally (see Make on Homebrew (Mac), Make for Windows, or your preferred installation) </li>
 <li><code>brew install make</code></li>
-<li>Clone fidesops <code>git clone https://github.com/ethyca/fidesops.git</code></li>
+<li><a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo">Create a fork of fidesops</a> </li>
+<li>Clone your fork <code>git clone https://github.com/&lt;your-fork-location&gt;/fidesops.git</code></li>
 <li><code>cd fidesops</code></li>
 </ol>
 <h3 id="available-make-commands">Available make commands</h3>
@@ -990,12 +991,12 @@ commands to give you different functionality.</p>
 <li><code>make check-migrations</code> - verifies there are no un-run migrations </li>
 <li><code>make docs-serve</code> - spins up just the docs</li>
 </ul>
-<p>see <a href="../../../../Makefile">Makefile</a> for more options. </p>
+<p>See <a href="../../../../Makefile">Makefile</a> for more options. </p>
 <h4 id="issues">Issues</h4>
 <p>When running <code>make server</code>, if you get a <code>importlib.metadata.PackageNotFoundError: fidesops</code>, do <code>make server-shell</code>,
 and then run <code>pip install -e .</code>. Verify Fidesops is installed with <code>pip list</code>. </p>
 <h3 id="write-your-code">Write your code</h3>
-<p>We have no doubt you can write amazing code! However, we want to help you ensure your code plays nicely with the rest of the Fides ecosystem. Many projects describe code style and documentation as a suggestion; in Fides it's a CI-checked requirement.</p>
+<p>We have no doubt you can write amazing code! However, we want to help you ensure your code plays nicely with the rest of the Fidesops ecosystem. Many projects describe code style and documentation as a suggestion; in Fidesops it's a CI-checked requirement.</p>
 <ul>
 <li>To learn how to style your code, see the <a href="../code_style/">style guide</a>.</li>
 <li>To learn how to document your code, see the <a href="../documentation/">docs guide</a>.</li>
@@ -1006,12 +1007,24 @@ and then run <code>pip install -e .</code>. Verify Fidesops is installed with <c
 <p>In order to submit code to Fidesops, please:</p>
 <ul>
 <li><a href="https://help.github.com/en/articles/fork-a-repo">Fork the Fidesops repository</a></li>
-<li><a href="https://help.github.com/en/desktop/contributing-to-projects/creating-a-branch-for-your-work">Create a new branch</a> on your fork</li>
+<li>Add the original as a remote (I'm naming it <code>upstream</code>), to keep your fork in sync
+  <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git remote add upstream https://github.com/ethyca/fidesops.git
+</code></pre></div>
+</td></tr></table></li>
+<li><a href="https://help.github.com/en/desktop/contributing-to-projects/creating-a-branch-for-your-work">Create a new branch</a> on your fork
+  <code>bash
+    git checkout main 
+    git fetch upstream 
+    git merge upstream/main 
+    git push origin main 
+    git checkout -b my-new-branch
+    git push origin my-new-branch</code></li>
 <li><a href="https://help.github.com/en/articles/creating-a-pull-request-from-a-fork">Open a Pull Request</a> once your work is ready for review</li>
-<li>Once automated tests have passed, a maintainer will review your PR and provide feedback on any changes it requires to be approved. Once approved, your PR will be merged into Fides.</li>
+<li>Submit the pull request from <em>your</em> repo</li>
+<li>Once automated tests have passed, a maintainer will review your PR and provide feedback on any changes it requires to be approved. Once approved, your PR will be merged into Fidesops.</li>
 </ul>
 <h3 id="congratulations">Congratulations</h3>
-<p>You're a Fides contributor - welcome to the team! 🎉</p>
+<p>You're a Fidesops contributor - welcome to the team! 🎉</p>
                 
               
               
