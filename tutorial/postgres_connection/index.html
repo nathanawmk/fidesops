@@ -894,7 +894,7 @@
 <p>For more detailed information, <a href="../../guides/database_connectors/">see the Database Connectors Guide</a>.</p>
 <hr />
 <p>Next, we need to create a ConnectionConfig so fidesops can connect to our Flask App's  database.</p>
-<p>Let's add a method that hits the PUT <code>connection</code> endpoint, and creates a ConnectionConfig for a <code>postgres</code> database.</p>
+<p>Let's add a method that hits the PUT <code>connection</code> endpoint, and creates a ConnectionConfig for a <code>postgres</code> database:</p>
 <h3 id="define-helper-methods">Define helper methods</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
@@ -937,7 +937,7 @@
     <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-<p>Secrets, like a username and password that are needed to access the Flask App's database, are added separately:</p>
+<p>Secrets, like a username and password that are needed to access the Flask App's databases, are added separately:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
